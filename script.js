@@ -3,7 +3,7 @@ const SHEET_CONFIG = {
     BUGS_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1SbZTe312_i2cu7EpjOvExLS2lGWkk61UxT5cBG4s0h4/edit?gid=78323318#gid=78323318',
     FEATURES_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1SbZTe312_i2cu7EpjOvExLS2lGWkk61UxT5cBG4s0h4/edit?gid=0#gid=0',
     // Вам нужно создать Web App в Google Apps Script и вставить сюда URL
-    WEB_APP_URL: 'ВАШ_GOOGLE_APPS_SCRIPT_WEB_APP_URL' // Замените на ваш URL
+    WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbxwv-g4iMPyRfbuyu2ojPaL-oxMuKlDJaVnYb62mmYUiReAQYc11uXU40fn7SDctzk97Q/exec' // Замените на ваш URL
 };
 
 // DOM элементы
