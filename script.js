@@ -93,40 +93,23 @@ window.addEventListener('beforeunload', (event) => {
 
 // Функция для отправки данных в Google Sheets
 async function submitToGoogleSheets(formData) {
-    const isBug = formData.type === 'баг';
-    const endpoint = isBug ? SHEET_CONFIG.BUGS_SHEET_URL : SHEET_CONFIG.FEATURES_SHEET_URL;
-    
     try {
-        // Здесь вы должны использовать Google Apps Script Web App
-        // Пример реализации с fetch:
-        /*
-        const response = await fetch(SHEET_CONFIG.WEB_APP_URL, {
+        // ВАЖНО: Замените этот URL на URL вашего Google Apps Script Web App
+        // После того как создадите скрипт и развернете его как веб-приложение
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxwv-g4iMPyRfbuyu2ojPaL-oxMuKlDJaVnYb62mmYUiReAQYc11uXU40fn7SDctzk97Q/exec';
+        
+        const response = await fetch(WEB_APP_URL, {
             method: 'POST',
+            mode: 'no-cors', // Важно для Google Apps Script
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData)
         });
         
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        
-        return await response.json();
-        */
-        
-        // Для демонстрации используем setTimeout
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                // Симуляция успешной отправки
-                const success = Math.random() > 0.2; // 80% успеха
-                if (success) {
-                    resolve({ success: true });
-                } else {
-                    throw new Error('Ошибка отправки');
-                }
-            }, 1500);
-        });
+        // При mode: 'no-cors' мы не можем проверить статус ответа,
+        // но если не будет ошибок сети, считаем успешным
+        return { success: true };
         
     } catch (error) {
         console.error('Error submitting to Google Sheets:', error);
