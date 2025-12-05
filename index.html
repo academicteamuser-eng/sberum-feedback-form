@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СберУм - Форма обратной связи</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Здесь подключите ваш шрифт -->
+    <!-- <link rel="stylesheet" href="fonts/font.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="logo">
+                <h1>СберУм</h1>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <h2 class="form-title">Форма сбора ОС по платформе «СберУм»</h2>
+            
+            <p class="form-description">
+                Это форма сбора обратной связи от контента. Пожалуйста, оставьте свои пожелания по дальнейшей доработке платформы или опишите баги, с которыми вы столкнулись.
+            </p>
+
+            <!-- Форма -->
+            <form id="feedbackForm" class="feedback-form">
+                <!-- 1. Представьтесь -->
+                <div class="form-group">
+                    <label for="name">Представьтесь <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                </div>
+
+                <!-- 2. Раздел платформы -->
+                <div class="form-group">
+                    <label for="platformSection">Раздел платформы <span class="required">*</span></label>
+                    <select id="platformSection" name="platformSection" required>
+                        <option value="" disabled selected>выберете</option>
+                        <option value="конструктор контента">конструктор контента</option>
+                        <option value="библиотека заданий">библиотека заданий</option>
+                        <option value="задания">задания</option>
+                        <option value="успеваемость">успеваемость</option>
+                        <option value="мои ученики">мои ученики</option>
+                        <option value="ИИ-помощник вне задания">ИИ-помощник вне задания</option>
+                        <option value="ИИ-тьютор в задании">ИИ-тьютор в задании</option>
+                        <option value="настройка профиля">настройка профиля</option>
+                        <option value="другое">другое</option>
+                    </select>
+                </div>
+
+                <!-- 3. Роль -->
+                <div class="form-group">
+                    <label for="role">Роль <span class="required">*</span></label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>выберете</option>
+                        <option value="учитель">учитель</option>
+                        <option value="ученик">ученик</option>
+                        <option value="учитель и ученик">учитель и ученик</option>
+                    </select>
+                </div>
+
+                <!-- 4. Тип -->
+                <div class="form-group">
+                    <label for="type">Тип <span class="required">*</span></label>
+                    <select id="type" name="type" required>
+                        <option value="" disabled selected>выберете</option>
+                        <option value="баг">баг</option>
+                        <option value="фича">фича</option>
+                    </select>
+                </div>
+
+                <!-- 5. Описание проблемы (по шагам) - показывается только для багов -->
+                <div class="form-group bug-fields" id="bugDescriptionGroup">
+                    <label for="problemDescription">Описание проблемы (по шагам)</label>
+                    <textarea id="problemDescription" name="problemDescription" 
+                              placeholder="шаг 1..
+шаг 2.."></textarea>
+                </div>
+
+                <!-- 6. Ожидаемый и фактический результат - показывается только для багов -->
+                <div class="form-group bug-fields" id="resultsGroup">
+                    <label for="expectedActual">Ожидаемый и фактический результат</label>
+                    <textarea id="expectedActual" name="expectedActual" 
+                              placeholder="ожидаемый..
+фактический.."></textarea>
+                </div>
+
+                <!-- 7. Описание доработки - показывается только для фич -->
+                <div class="form-group feature-fields" id="improvementGroup">
+                    <label for="improvementDescription">Описание доработки</label>
+                    <textarea id="improvementDescription" name="improvementDescription" 
+                              placeholder="описание.."></textarea>
+                </div>
+
+                <!-- 8. Предложение - показывается только для фич -->
+                <div class="form-group feature-fields" id="suggestionGroup">
+                    <label for="suggestion">Предложение</label>
+                    <textarea id="suggestion" name="suggestion" 
+                              placeholder="предложение.."></textarea>
+                </div>
+
+                <!-- 9. Для чего эта фича - показывается только для фич -->
+                <div class="form-group feature-fields" id="purposeGroup">
+                    <label for="purpose">Для чего эта фича?</label>
+                    <textarea id="purpose" name="purpose" 
+                              placeholder="мотивация.."></textarea>
+                </div>
+
+                <!-- 10. Приоритет -->
+                <div class="form-group">
+                    <label for="priority">Приоритет</label>
+                    <select id="priority" name="priority">
+                        <option value="" disabled selected>выберете</option>
+                        <option value="низкий">низкий</option>
+                        <option value="средний">средний</option>
+                        <option value="высокий">высокий</option>
+                    </select>
+                </div>
+
+                <!-- 11. Скриншоты / видео -->
+                <div class="form-group">
+                    <label for="screenshots">Скриншоты / видео</label>
+                    <div class="file-upload-section">
+                        <input type="file" id="screenshots" name="screenshots" accept="image/*,video/*" multiple>
+                        <div class="url-input">
+                            <input type="text" id="mediaUrl" name="mediaUrl" placeholder="Или вставьте ссылку на файл">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. Ссылка на задание -->
+                <div class="form-group">
+                    <label for="taskLink">Ссылка на задание</label>
+                    <input type="url" id="taskLink" name="taskLink" placeholder="https://...">
+                </div>
+
+                <!-- Кнопка отправки -->
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Отправить
+                    </button>
+                </div>
+            </form>
+        </main>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <p>© 2024 СберУм. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Спасибо!</h3>
+            <p>Ваши данные отправлены.</p>
+            <button class="modal-btn" onclick="closeModal()">Ок</button>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3>Ошибка отправки</h3>
+            <p>Данные не получилось отправить, попробуйте повторить. Если проблема сохраняется, свяжитесь с Екатериной Семененко.</p>
+            <button class="modal-btn" onclick="closeModal()">Ок</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
