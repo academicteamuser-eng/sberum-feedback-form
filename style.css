@@ -215,6 +215,7 @@ body::after {
     flex-direction: column;
     gap: 10px;
     animation: fadeIn 0.5s ease;
+    border-radius: var(--radius-md);
 }
 
 @keyframes fadeIn {
@@ -278,35 +279,6 @@ textarea {
     line-height: 1.6;
 }
 
-select {
-    border-radius: 12px !important;
-    border-bottom-left-radius: 12px !important;
-    border-bottom-right-radius: 12px !important;
-}
-
-/* При фокусе немного меняем скругление верхних углов */
-select:focus {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
-/* Для выпадающего списка в Chrome/Safari */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    select {
-        border-radius: 12px;
-    }
-    
-    select:focus {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    
-    /* Пытаемся закруглить углы dropdown */
-    select option {
-        border-radius: 6px;
-        margin: 2px;
-    }
-}
 
 /* Секция загрузки файлов */
 .file-upload-section {
