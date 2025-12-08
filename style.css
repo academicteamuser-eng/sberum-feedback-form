@@ -242,14 +242,8 @@ body::after {
 
 /* выпадающие списки */
 
-/* Контейнер для кастомного селекта */
-.select-container {
-    position: relative;
-    width: 100%;
-}
-
-/* Базовая стилизация select */
-select {
+/* Контейнер для лучшего контроля */
+.form-group select {
     width: 100%;
     padding: 16px 52px 16px 20px;
     border: 1.5px solid rgba(0, 0, 0, 0.08);
@@ -262,77 +256,67 @@ select {
     box-shadow: var(--shadow-light);
     cursor: pointer;
     appearance: none;
+    
+    /* Кастомная стрелка */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 20px center;
     background-size: 20px;
-    position: relative;
-    z-index: 2;
+    
+    /* Убираем стандартный вид */
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-/* Стиль для disabled option */
-select option[disabled] {
+/* Для Firefox */
+@-moz-document url-prefix() {
+    .form-group select {
+        padding-right: 48px;
+        background-position: right 16px center;
+    }
+}
+
+/* Стили для disabled (первая option с placeholder) */
+.form-group select option[disabled] {
     color: var(--text-light);
     font-style: italic;
+    background-color: var(--input-bg);
 }
 
-/* Стили для option */
-select option {
-    padding: 12px 20px;
+/* Базовые стили для option (работают ограниченно) */
+.form-group select option {
+    padding: 12px 15px;
     font-size: 15px;
-    background: white;
+    background-color: white;
     color: var(--text-primary);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all var(--transition-fast);
+    
+    /* Эти свойства могут работать */
+    font-weight: normal;
+    font-style: normal;
 }
 
-/* Эффект при наведении на option (работает не во всех браузерах) */
-select option:hover,
-select option:focus,
-select option:checked {
+/* Для option при наведении (работает не везде) */
+.form-group select option:hover,
+.form-group select option:focus {
+    background-color: rgba(102, 126, 234, 0.1);
+}
+
+/* Для выбранного option (работает не везде) */
+.form-group select option:checked {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     color: white;
-    padding-left: 25px;
+    font-weight: 600;
 }
 
 /* Декоративный элемент для селекта */
-.select-container::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-    z-index: 1;
+.form-group {
+    position: relative;
 }
 
-select:focus ~ .select-container::after {
-    opacity: 1;
-}
-
-/* Анимация при изменении значения */
-select.changed {
-    animation: selectChange 0.4s ease;
-}
-
-@keyframes selectChange {
-    0% {
-        transform: translateY(-2px) scale(1);
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-    }
-    50% {
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
-    }
-    100% {
-        transform: translateY(-2px) scale(1);
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
-    }
+/* Индикатор выбранного значения */
+.form-group select:valid {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 17px; /* 20px - 3px */
 }
 
 input, textarea {
