@@ -270,6 +270,22 @@ select {
     z-index: 2;
 }
 
+/* Стиль для disabled option */
+select option[disabled] {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Стили для option */
+select option {
+    padding: 12px 20px;
+    font-size: 15px;
+    background: white;
+    color: var(--text-primary);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all var(--transition-fast);
+}
+
 input, textarea {
     padding: 16px 20px;
     border: 1px solid rgba(0, 0, 0, 0.08);
