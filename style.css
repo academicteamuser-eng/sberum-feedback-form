@@ -286,6 +286,12 @@ select {
     padding-right: 50px;
 }
 
+select option {
+    border-radius: 8px;
+    margin: 2px;
+    padding: 10px 15px;
+}
+
 /* Секция загрузки файлов */
 .file-upload-section {
     display: flex;
