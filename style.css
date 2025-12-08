@@ -240,7 +240,37 @@ body::after {
     font-weight: bold;
 }
 
-input, select, textarea {
+/* выпадающие списки */
+
+/* Контейнер для кастомного селекта */
+.select-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Базовая стилизация select */
+select {
+    width: 100%;
+    padding: 16px 52px 16px 20px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all var(--transition-normal);
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-light);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+input, textarea {
     padding: 16px 20px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius-md);
@@ -276,15 +306,6 @@ textarea {
     line-height: 1.6;
 }
 
-select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 20px;
-    padding-right: 50px;
-}
 
 /* Секция загрузки файлов */
 .file-upload-section {
