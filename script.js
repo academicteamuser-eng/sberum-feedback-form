@@ -143,6 +143,7 @@ form.addEventListener('submit', async (event) => {
     // Показать индикатор загрузки
     const submitBtn = form.querySelector('.submit-btn');
     const originalText = submitBtn.innerHTML;
+    submitBtn.classList.add('sending'); //анимация
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
     submitBtn.disabled = true;
     
@@ -152,6 +153,9 @@ form.addEventListener('submit', async (event) => {
         
         // Показать успешное сообщение
         showModal(successModal);
+        submitBtn.classList.remove('sending');
+submitBtn.classList.add('success');
+setTimeout(() => submitBtn.classList.remove('success'), 3000);
         
         // Сбросить форму
         form.reset();
@@ -162,6 +166,9 @@ form.addEventListener('submit', async (event) => {
         // Показать сообщение об ошибке
         showModal(errorModal);
         console.error('Submission error:', error);
+        submitBtn.classList.remove('sending');
+submitBtn.classList.add('error');
+setTimeout(() => submitBtn.classList.remove('error'), 3000);
         
     } finally {
         // Восстановить кнопку
