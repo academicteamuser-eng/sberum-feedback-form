@@ -286,6 +286,55 @@ select option {
     transition: all var(--transition-fast);
 }
 
+/* Эффект при наведении на option (работает не во всех браузерах) */
+select option:hover,
+select option:focus,
+select option:checked {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding-left: 25px;
+}
+
+/* Декоративный элемент для селекта */
+.select-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: 1;
+}
+
+select:focus ~ .select-container::after {
+    opacity: 1;
+}
+
+/* Анимация при изменении значения */
+select.changed {
+    animation: selectChange 0.4s ease;
+}
+
+@keyframes selectChange {
+    0% {
+        transform: translateY(-2px) scale(1);
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    }
+    50% {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+    }
+    100% {
+        transform: translateY(-2px) scale(1);
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+    }
+}
+
 input, textarea {
     padding: 16px 20px;
     border: 1px solid rgba(0, 0, 0, 0.08);
