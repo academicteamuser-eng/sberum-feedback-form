@@ -572,3 +572,24 @@ select option {
 .bug-fields, .feature-fields {
     animation: slideInRight 0.5s ease;
 }
+
+/* Простая версия info-icon */
+.simple-info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 50%;
+    margin-left: 8px;
+    cursor: help;
+    transition: all 0.2s ease;
+}
+
+.simple-info-icon:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: scale(1.1);
+}
