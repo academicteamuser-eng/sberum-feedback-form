@@ -243,7 +243,7 @@ function createInfoIcons() {
         // Создаем иконку
         const icon = document.createElement('span');
         icon.className = 'info-icon';
-        icon.textContent = 'ℹ️';
+       // icon.textContent = 'ℹ️';
         icon.title = 'Показать подсказку';
         icon.setAttribute('aria-label', 'Информация');
         icon.setAttribute('role', 'button');
