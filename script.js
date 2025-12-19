@@ -190,19 +190,16 @@ fileInput.addEventListener('change', (event) => {
 // ========== ИНФОРМАЦИОННЫЕ ИКОНКИ С ПОДСКАЗКАМИ ==========
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Создаем иконки с tooltip
     createInfoIcons();
-    
-    // Обработчики для tooltip
     setupTooltipInteractions();
+    fixTooltipPositions();
 });
 
 function createInfoIcons() {
-    // Массив полей и их подсказок
     const tooltips = [
         {
             fieldId: 'improvementGroup',
-            tooltipText: '1. Создать задание / войти в конструктор контента\n2. Добавить текстовый блок\n3. Написать текст\n4. Выделить текст в рамку'
+            tooltipText: '1. Создать задание / войти в конструктор контента\n2. Добавить текстовый блок\n3. Написать текст\n4. Выделить текст в рамку\n\nСценарий 1\n\nОпишите по шагам путь, который необходимо пройти, чтобы дойти до описываемой функции.\n1. ...\n2. ...'
         },
         {
             fieldId: 'suggestionGroup',
@@ -229,32 +226,27 @@ function createInfoIcons() {
         const label = field.querySelector('label');
         if (!label) return;
         
-        // Удаляем существующую иконку, если есть
-        const existingIcon = label.querySelector('.info-icon');
-        if (existingIcon) existingIcon.remove();
+        // Проверяем, не добавлена ли уже иконка
+        if (label.querySelector('.info-icon')) return;
         
-        // Создаем контейнер для иконки
+        // Создаем контейнер
         const iconContainer = document.createElement('span');
         iconContainer.className = 'tooltip-container';
-        iconContainer.style.display = 'inline-flex';
-        iconContainer.style.alignItems = 'center';
-        iconContainer.style.marginLeft = '8px';
         
         // Создаем иконку
         const icon = document.createElement('span');
         icon.className = 'info-icon';
-       icon.textContent = 'i';
-        icon.title = 'Показать подсказку';
+        icon.innerHTML = 'ℹ️';
+        icon.setAttribute('title', 'Показать подсказку');
         icon.setAttribute('aria-label', 'Информация');
         icon.setAttribute('role', 'button');
         icon.setAttribute('tabindex', '0');
         
         // Создаем tooltip
         const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip tooltip-top';
-        tooltip.setAttribute('role', 'tooltip');
+        tooltip.className = 'tooltip';
         
-        // Добавляем контент в tooltip
+        // Добавляем контент
         const tooltipContent = document.createElement('div');
         tooltipContent.className = 'tooltip-content';
         tooltipContent.textContent = tooltipText;
@@ -264,47 +256,75 @@ function createInfoIcons() {
         closeButton.className = 'tooltip-close';
         closeButton.innerHTML = '×';
         closeButton.setAttribute('aria-label', 'Закрыть подсказку');
-        closeButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            tooltip.classList.remove('active');
-            icon.focus();
-        });
         
         tooltip.appendChild(tooltipContent);
         tooltip.appendChild(closeButton);
-        
-        // Добавляем иконку и tooltip в контейнер
         icon.appendChild(tooltip);
         iconContainer.appendChild(icon);
         
-        // Добавляем контейнер в label
+        // Добавляем в label
         label.appendChild(iconContainer);
     });
 }
 
+function fixTooltipPositions() {
+    // Исправляем позиционирование всех tooltip
+    document.querySelectorAll('.tooltip').forEach(tooltip => {
+        // Убеждаемся, что tooltip позиционируется относительно viewport
+        tooltip.style.left = '50%';
+        tooltip.style.right = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
+    });
+}
+
 function setupTooltipInteractions() {
-    // Делегирование событий для tooltip
+    // Показать/скрыть tooltip
     document.addEventListener('mouseover', function(e) {
         const icon = e.target.closest('.info-icon');
         if (icon) {
-            // Закрываем другие открытые tooltip
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-                if (tooltip !== icon.querySelector('.tooltip')) {
-                    tooltip.classList.remove('active');
-                }
-            });
-            
-            // Показываем текущий tooltip
             const tooltip = icon.querySelector('.tooltip');
             if (tooltip) {
+                // Закрываем другие
+                document.querySelectorAll('.tooltip').forEach(t => {
+                    t.style.opacity = '0';
+                    t.style.visibility = 'hidden';
+                    t.classList.remove('active');
+                });
+                
+                // Показываем текущий
+                tooltip.style.opacity = '1';
+                tooltip.style.visibility = 'visible';
                 tooltip.classList.add('active');
+                
+                // Исправляем позицию
+                setTimeout(() => {
+                    const rect = tooltip.getBoundingClientRect();
+                    if (rect.left < 10) {
+                        tooltip.style.left = 'calc(50% + ' + Math.abs(rect.left) + 'px)';
+                    }
+                    if (rect.right > window.innerWidth - 10) {
+                        tooltip.style.left = 'calc(50% - ' + (rect.right - window.innerWidth + 10) + 'px)';
+                    }
+                }, 10);
             }
         }
     });
     
-    // Клик по иконке (для мобильных устройств)
+    // Клик по иконке
     document.addEventListener('click', function(e) {
         const icon = e.target.closest('.info-icon');
+        const closeBtn = e.target.closest('.tooltip-close');
+        
+        if (closeBtn) {
+            const tooltip = closeBtn.closest('.tooltip');
+            if (tooltip) {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
+                tooltip.classList.remove('active');
+            }
+            return;
+        }
+        
         if (icon) {
             e.preventDefault();
             e.stopPropagation();
@@ -313,19 +333,36 @@ function setupTooltipInteractions() {
             if (tooltip) {
                 const isActive = tooltip.classList.contains('active');
                 
-                // Закрываем все tooltip
-                document.querySelectorAll('.tooltip.active').forEach(t => {
+                // Закрываем все
+                document.querySelectorAll('.tooltip').forEach(t => {
+                    t.style.opacity = '0';
+                    t.style.visibility = 'hidden';
                     t.classList.remove('active');
                 });
                 
-                // Если tooltip не был активен, показываем его
+                // Открываем текущий, если был закрыт
                 if (!isActive) {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
                     tooltip.classList.add('active');
+                    
+                    // Исправляем позицию
+                    setTimeout(() => {
+                        const rect = tooltip.getBoundingClientRect();
+                        if (rect.left < 10) {
+                            tooltip.style.left = 'calc(50% + ' + (10 - rect.left) + 'px)';
+                        }
+                        if (rect.right > window.innerWidth - 10) {
+                            tooltip.style.left = 'calc(50% - ' + (rect.right - window.innerWidth + 10) + 'px)';
+                        }
+                    }, 10);
                 }
             }
         } else {
-            // Клик вне иконки - закрываем все tooltip
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+            // Клик вне tooltip - закрываем все
+            document.querySelectorAll('.tooltip').forEach(tooltip => {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
                 tooltip.classList.remove('active');
             });
         }
@@ -334,35 +371,11 @@ function setupTooltipInteractions() {
     // Закрытие по Escape
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+            document.querySelectorAll('.tooltip').forEach(tooltip => {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
                 tooltip.classList.remove('active');
             });
         }
     });
-    
-    // Управление с клавиатуры
-    document.addEventListener('keydown', function(e) {
-        const icon = e.target.closest('.info-icon');
-        if (icon && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault();
-            const tooltip = icon.querySelector('.tooltip');
-            if (tooltip) {
-                const isActive = tooltip.classList.contains('active');
-                document.querySelectorAll('.tooltip.active').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                if (!isActive) {
-                    tooltip.classList.add('active');
-                }
-            }
-        }
-    });
-    
-    // Автоматическое закрытие tooltip при скролле
-    window.addEventListener('scroll', function() {
-        document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-            tooltip.classList.remove('active');
-        });
-    }, true);
 }
