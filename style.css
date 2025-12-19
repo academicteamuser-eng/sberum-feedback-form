@@ -609,7 +609,7 @@ select option {
 
 /* Сам tooltip */
 .tooltip {
-    position: absolute;
+    position: relative;
     background: white;
     color: #2d3748;
     padding: 16px 20px;
