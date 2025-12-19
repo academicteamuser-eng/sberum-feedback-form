@@ -227,7 +227,7 @@ body::after {
 }
 
 .form-group label {
-    font-weight: 600;
+   /* font-weight: 600;*/
     font-size: 14px;
     color: var(--text-primary);
     display: flex;
