@@ -76,49 +76,66 @@
                     </select>
                 </div>
 
-                <!-- 5. Описание проблемы (по шагам) - показывается только для багов -->
+                <!-- 5. Сценарий - показывается только для багов -->
                 <div class="form-group bug-fields" id="bugDescriptionGroup">
-                    <label for="problemDescription">Описание проблемы (по шагам)</label>
+                    <label for="problemDescription">Сценарий
+                    <span class="info-icon" data-tooltip="1. Создать задание / войти в конструктор заданий
+2. Создать вопрос с типом ответа &quot;выбор варианта&quot;
+3. В варианте ответа написать формулу
+ИЛИ
+Сгенерировать вопросы с выбором ответа по математике, предполагающие использование формул (например по запросу &quot;формулы сокращенного умножения&quot;)"></span>
+    </label>
                     <textarea id="problemDescription" name="problemDescription" 
-                              placeholder="шаг 1..
-шаг 2.."></textarea>
+                              placeholder="Опишите по шагам путь, который необходимо пройти, чтобы воспроизвести баг.
+                        1. ...
+                        2. ..."></textarea>
                 </div>
 
-                <!-- 6. Ожидаемый и фактический результат - показывается только для багов -->
+                <!-- 6. Результат - показывается только для багов -->
                 <div class="form-group bug-fields" id="resultsGroup">
-                    <label for="expectedActual">Ожидаемый и фактический результат</label>
+                    <label for="expectedActual">Результат
+                    <span class="info-icon" data-tooltip="Ожидаемый: доступно добавление формул вручную, работает преобразование формул из записи с $$
+Фактический: не доступно добавление формул, не реализовано преобразование формул из записи с $$"></span>
+    </label>
                     <textarea id="expectedActual" name="expectedActual" 
-                              placeholder="ожидаемый..
-фактический.."></textarea>
+                              placeholder="Опишите ожидаемый и фактический результат.
+                        Ожидаемый: ...
+                        Фактический: ..."></textarea>
                 </div>
 
-                <!-- 7. Описание доработки - показывается только для фич -->
+                <!-- 7. Сценарий - показывается только для фич -->
                 <div class="form-group feature-fields" id="improvementGroup">
-                    <label for="improvementDescription">Описание доработки
+                    <label for="improvementDescription">Сценарий
                     <span class="info-icon" data-tooltip="1. Создать задание / войти в конструктор контента
 2. Добавить текстовый блок
 3. Написать текст
 4. Выделить текст в рамку"></span>
     </label>
                     <textarea id="improvementDescription" name="improvementDescription" 
-                              placeholder="описание.."></textarea>
+                              placeholder="Опишите по шагам путь, который необходимо пройти, чтобы дойти до описываемой функции.
+                        1. ...
+                        2. ..."></textarea>
                 </div>
 
-                <!-- 8. Предложение - показывается только для фич -->
+                <!-- 8. Результат - показывается только для фич -->
                 <div class="form-group feature-fields" id="suggestionGroup">
-                    <label for="suggestion">Предложение
+                    <label for="suggestion">Результат
                     <span class="info-icon" data-tooltip="Ожидаемый: можно выбрать ширину рамки, либо, чтобы она заканчивалась сразу после текста, либо чтобы она была на всю ширину строки
 Фактический: регулировать ширину нельзя, рамка растягивается на всю строку"></span>
     </label>
                     <textarea id="suggestion" name="suggestion" 
-                              placeholder="предложение.."></textarea>
+                              placeholder="Опишите ожидаемый и фактический результат.
+                        Ожидаемый: ...
+                        Фактический: ..."></textarea>
                 </div>
 
-                <!-- 9. Для чего эта фича - показывается только для фич -->
+                <!-- 9. Для чего? - показывается только для фич -->
                 <div class="form-group feature-fields" id="purposeGroup">
-                    <label for="purpose">Для чего эта фича?</label>
+                    <label for="purpose">Для чего?
+                    <span class="info-icon" data-tooltip="Это позволит снизить нагрузку на худредакцию, т.к. откроет больше возможностей для самостоятельного оформления контента на платформе"></span>
+    </label>
                     <textarea id="purpose" name="purpose" 
-                              placeholder="мотивация.."></textarea>
+                              placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
                 </div>
 
                 <!-- 10. Приоритет -->
