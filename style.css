@@ -573,18 +573,10 @@ select option {
     animation: slideInRight 0.5s ease;
 }
 
-/* Контейнер для иконки */
-.tooltip-container {
-    position: relative;
-    display: inline-flex !important;
-    align-items: center;
-    margin-left: 8px;
-    vertical-align: middle;
-}
+/* ========== СТИЛИ ДЛЯ ИНФОРМАЦИОННЫХ ИКОНОК ========== */
 
-/* Иконка */
 .info-icon {
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 20px;
@@ -593,11 +585,11 @@ select option {
     color: #667eea;
     background: rgba(102, 126, 234, 0.1);
     border-radius: 50%;
+    margin-left: 8px;
     cursor: help;
     position: relative;
     transition: all 0.2s ease;
     user-select: none;
-    flex-shrink: 0;
 }
 
 .info-icon:hover {
@@ -605,34 +597,65 @@ select option {
     transform: scale(1.1);
 }
 
-/* Сам tooltip - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+.info-icon:active {
+    transform: scale(0.95);
+}
+
+/* Контейнер для tooltip */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Сам tooltip */
 .tooltip {
     position: absolute;
     background: white;
     color: #2d3748;
-    padding: 20px;
+    padding: 16px 20px;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     font-size: 14px;
     line-height: 1.6;
-    width: 350px;
-    max-width: calc(100vw - 40px);
-    z-index: 9999;
+    width: 300px;
+    max-width: 90vw;
+    z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateY(10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
     pointer-events: none;
     white-space: pre-line;
-    text-align: left;
-    left: 50% !important;
-    right: auto !important;
-    bottom: calc(100% + 12px);
 }
 
-/* Показать tooltip */
+/* Позиционирование tooltip */
+.tooltip-top {
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.tooltip-bottom {
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.tooltip-left {
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+}
+
+.tooltip-right {
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+}
+
+/* Показать tooltip при наведении на info-icon */
 .info-icon:hover .tooltip,
 .info-icon:focus .tooltip,
 .info-icon.active .tooltip {
@@ -642,25 +665,92 @@ select option {
     pointer-events: auto;
 }
 
+/* Для tooltip-right и tooltip-left */
+.info-icon:hover .tooltip-right,
+.info-icon:focus .tooltip-right,
+.info-icon.active .tooltip-right {
+    transform: translateY(-50%) translateX(0);
+}
+
+.info-icon:hover .tooltip-left,
+.info-icon:focus .tooltip-left,
+.info-icon.active .tooltip-left {
+    transform: translateY(-50%) translateX(0);
+}
+
 /* Стрелка у tooltip */
 .tooltip::after {
     content: '';
     position: absolute;
+    border: 8px solid transparent;
+}
+
+.tooltip-top::after {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border: 8px solid transparent;
     border-top-color: white;
 }
 
-/* Контент внутри tooltip */
+.tooltip-bottom::after {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: white;
+}
+
+.tooltip-left::after {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: white;
+}
+
+.tooltip-right::after {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: white;
+}
+
+/* Мобильная адаптация для tooltip */
+@media (max-width: 768px) {
+    .tooltip {
+        width: 280px;
+        max-width: calc(100vw - 40px);
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) translateY(10px) !important;
+    }
+    
+    .tooltip-right,
+    .tooltip-left {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) translateY(10px) !important;
+    }
+    
+    .tooltip-right::after,
+    .tooltip-left::after {
+        display: none;
+    }
+    
+    .tooltip-top {
+        bottom: calc(100% + 15px);
+    }
+    
+    .tooltip-bottom {
+        top: calc(100% + 15px);
+    }
+}
+
+/* Улучшенный вид tooltip */
 .tooltip-content {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 5px;
 }
 
-/* Скроллбар */
 .tooltip-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -675,7 +765,11 @@ select option {
     border-radius: 3px;
 }
 
-/* Кнопка закрытия */
+.tooltip-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.5);
+}
+
+/* Иконка закрытия для tooltip (если нужно сделать его кликабельным) */
 .tooltip-close {
     position: absolute;
     top: 10px;
@@ -688,41 +782,11 @@ select option {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     color: #4a5568;
-    border: none;
-    padding: 0;
     transition: all 0.2s ease;
-    z-index: 2;
 }
 
-.tooltip-close:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: #2d3748;
-}
-
-/* Для мобильных устройств */
-@media (max-width: 768px) {
-    .tooltip {
-        width: 300px;
-        left: 50% !important;
-        transform: translateX(-50%) translateY(10px) !important;
-    }
-    
-    .info-icon:hover .tooltip,
-    .info-icon.active .tooltip {
-        transform: translateX(-50%) translateY(0) !important;
-    }
-}
-
-/* Важно: исправляем позиционирование label */
-.form-group label {
-    display: flex !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-    position: relative !important;
-}
 .tooltip-close:hover {
     background: rgba(0, 0, 0, 0.1);
     color: #2d3748;
