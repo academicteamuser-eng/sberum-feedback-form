@@ -575,219 +575,113 @@ select option {
 
 /* ========== СТИЛИ ДЛЯ ИНФОРМАЦИОННЫХ ИКОНОК ========== */
 
+/* ========== ПРОСТЫЕ И РАБОЧИЕ СТИЛИ ДЛЯ TOOLTIP ========== */
+
+/* Иконка */
 .info-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     font-size: 14px;
     color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(102, 126, 234, 0.15);
     border-radius: 50%;
-    margin-left: 8px;
+    margin-left: 10px;
     cursor: help;
     position: relative;
     transition: all 0.2s ease;
-    user-select: none;
+    flex-shrink: 0;
+    vertical-align: middle;
+    line-height: 1;
 }
 
 .info-icon:hover {
-    background: rgba(102, 126, 234, 0.2);
+    background: rgba(102, 126, 234, 0.25);
     transform: scale(1.1);
 }
 
-.info-icon:active {
-    transform: scale(0.95);
-}
-
-/* Контейнер для tooltip */
-.tooltip-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Сам tooltip */
-.tooltip {
+/* Простой tooltip, который появляется при наведении */
+.info-icon::after {
+    content: attr(data-tooltip);
     position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
     background: white;
     color: #2d3748;
-    padding: 16px 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
     font-size: 14px;
-    line-height: 1.6;
-    width: 300px;
+    line-height: 1.5;
+    width: 320px;
     max-width: 90vw;
-    z-index: 1000;
+    z-index: 10000;
+    white-space: pre-line;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
     pointer-events: none;
-    white-space: pre-line;
+    text-align: left;
+    word-wrap: break-word;
 }
 
-/* Позиционирование tooltip */
-.tooltip-top {
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-}
-
-.tooltip-bottom {
-    top: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-}
-
-.tooltip-left {
-    right: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-}
-
-.tooltip-right {
-    left: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-}
-
-/* Показать tooltip при наведении на info-icon */
-.info-icon:hover .tooltip,
-.info-icon:focus .tooltip,
-.info-icon.active .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-}
-
-/* Для tooltip-right и tooltip-left */
-.info-icon:hover .tooltip-right,
-.info-icon:focus .tooltip-right,
-.info-icon.active .tooltip-right {
-    transform: translateY(-50%) translateX(0);
-}
-
-.info-icon:hover .tooltip-left,
-.info-icon:focus .tooltip-left,
-.info-icon.active .tooltip-left {
-    transform: translateY(-50%) translateX(0);
-}
-
-/* Стрелка у tooltip */
-.tooltip::after {
+/* Стрелочка */
+.info-icon::before {
     content: '';
     position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
     border: 8px solid transparent;
-}
-
-.tooltip-top::after {
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
     border-top-color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10001;
 }
 
-.tooltip-bottom::after {
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-bottom-color: white;
+/* Показать tooltip при наведении */
+.info-icon:hover::after,
+.info-icon:hover::before {
+    opacity: 1;
+    visibility: visible;
 }
 
-.tooltip-left::after {
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-left-color: white;
-}
-
-.tooltip-right::after {
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-right-color: white;
-}
-
-/* Мобильная адаптация для tooltip */
+/* Для мобильных - tooltip снизу */
 @media (max-width: 768px) {
-    .tooltip {
+    .info-icon::after {
         width: 280px;
-        max-width: calc(100vw - 40px);
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%) translateY(10px) !important;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: auto;
+        top: calc(100% + 12px);
     }
     
-    .tooltip-right,
-    .tooltip-left {
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%) translateY(10px) !important;
-    }
-    
-    .tooltip-right::after,
-    .tooltip-left::after {
-        display: none;
-    }
-    
-    .tooltip-top {
-        bottom: calc(100% + 15px);
-    }
-    
-    .tooltip-bottom {
-        top: calc(100% + 15px);
+    .info-icon::before {
+        bottom: auto;
+        top: calc(100% + 4px);
+        border-top-color: transparent;
+        border-bottom-color: white;
     }
 }
 
-/* Улучшенный вид tooltip */
-.tooltip-content {
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
-.tooltip-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.tooltip-content::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 3px;
-}
-
-.tooltip-content::-webkit-scrollbar-thumb {
-    background: rgba(102, 126, 234, 0.3);
-    border-radius: 3px;
-}
-
-.tooltip-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(102, 126, 234, 0.5);
-}
-
-/* Иконка закрытия для tooltip (если нужно сделать его кликабельным) */
-.tooltip-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
+/* Убедимся, что label правильно отображает иконку */
+.form-group label {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 12px;
-    color: #4a5568;
-    transition: all 0.2s ease;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.tooltip-close:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: #2d3748;
+/* Чтобы tooltip не выходил за экран слева/справа */
+@media (max-width: 400px) {
+    .info-icon::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 40px);
+    }
 }
