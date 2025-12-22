@@ -298,11 +298,18 @@ function setupTooltipInteractions() {
     // Делегирование событий для tooltip
     document.addEventListener('mouseover', function(e) {
         const icon = e.target.closest('.info-icon');
+        const closeBtn = e.target.closest('.tooltip-close');
+        
+        // Если навели на крестик - ничего не делаем
+        if (closeBtn) return;
+        
         if (icon) {
             // Закрываем другие открытые tooltip
             document.querySelectorAll('.tooltip.active').forEach(tooltip => {
                 if (tooltip !== icon.querySelector('.tooltip')) {
                     tooltip.classList.remove('active');
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
                 }
             });
             
@@ -310,13 +317,39 @@ function setupTooltipInteractions() {
             const tooltip = icon.querySelector('.tooltip');
             if (tooltip) {
                 tooltip.classList.add('active');
+                tooltip.style.opacity = '1';
+                tooltip.style.visibility = 'visible';
             }
         }
     });
     
-    // Клик по иконке (для мобильных устройств)
+    // Клик по иконке или в любом месте
     document.addEventListener('click', function(e) {
         const icon = e.target.closest('.info-icon');
+        const closeBtn = e.target.closest('.tooltip-close');
+        const tooltipElement = e.target.closest('.tooltip');
+        
+        // Клик на крестик - закрываем tooltip
+        if (closeBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const tooltip = closeBtn.closest('.tooltip');
+            if (tooltip) {
+                tooltip.classList.remove('active');
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
+                
+                // Возвращаем фокус на иконку
+                const parentIcon = tooltip.closest('.info-icon');
+                if (parentIcon) {
+                    parentIcon.focus();
+                }
+            }
+            return;
+        }
+        
+        // Клик на иконку
         if (icon) {
             e.preventDefault();
             e.stopPropagation();
@@ -328,17 +361,28 @@ function setupTooltipInteractions() {
                 // Закрываем все tooltip
                 document.querySelectorAll('.tooltip.active').forEach(t => {
                     t.classList.remove('active');
+                    t.style.opacity = '0';
+                    t.style.visibility = 'hidden';
                 });
                 
                 // Если tooltip не был активен, показываем его
                 if (!isActive) {
                     tooltip.classList.add('active');
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
                 }
             }
-        } else {
-            // Клик вне иконки - закрываем все tooltip
+        } 
+        // Клик на сам tooltip (не на крестик) - ничего не делаем
+        else if (tooltipElement) {
+            e.stopPropagation();
+        }
+        // Клик вне tooltip и иконки - закрываем все
+        else {
             document.querySelectorAll('.tooltip.active').forEach(tooltip => {
                 tooltip.classList.remove('active');
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
             });
         }
     });
@@ -348,6 +392,8 @@ function setupTooltipInteractions() {
         if (e.key === 'Escape') {
             document.querySelectorAll('.tooltip.active').forEach(tooltip => {
                 tooltip.classList.remove('active');
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
             });
         }
     });
@@ -357,15 +403,21 @@ function setupTooltipInteractions() {
         const icon = e.target.closest('.info-icon');
         if (icon && (e.key === 'Enter' || e.key === ' ')) {
             e.preventDefault();
+            e.stopPropagation();
+            
             const tooltip = icon.querySelector('.tooltip');
             if (tooltip) {
                 const isActive = tooltip.classList.contains('active');
                 document.querySelectorAll('.tooltip.active').forEach(t => {
                     t.classList.remove('active');
+                    t.style.opacity = '0';
+                    t.style.visibility = 'hidden';
                 });
                 
                 if (!isActive) {
                     tooltip.classList.add('active');
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
                 }
             }
         }
@@ -375,6 +427,17 @@ function setupTooltipInteractions() {
     window.addEventListener('scroll', function() {
         document.querySelectorAll('.tooltip.active').forEach(tooltip => {
             tooltip.classList.remove('active');
+            tooltip.style.opacity = '0';
+            tooltip.style.visibility = 'hidden';
         });
     }, true);
+    
+    // Закрытие при изменении размера окна
+    window.addEventListener('resize', function() {
+        document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+            tooltip.classList.remove('active');
+            tooltip.style.opacity = '0';
+            tooltip.style.visibility = 'hidden';
+        });
+    });
 }
