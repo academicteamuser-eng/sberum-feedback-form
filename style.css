@@ -635,13 +635,13 @@ select option {
 .tooltip-top {
     bottom: calc(100% + 10px);
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(calc(-50% + 50px)) translateY(10px);
 }
 
 .tooltip-bottom {
     top: calc(100% + 10px);
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(calc(-50% + 50px)) translateY(10px);
 }
 
 .tooltip-left {
