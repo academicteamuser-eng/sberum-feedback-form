@@ -792,3 +792,20 @@ select option {
     background: rgba(0, 0, 0, 0.1);
     color: #2d3748;
 }
+.info-icon,
+.tooltip-close {
+    pointer-events: auto !important;
+}
+
+/* Убираем стандартный tooltip */
+.info-icon[title],
+.tooltip-close[title] {
+    position: relative;
+}
+
+.info-icon[title]::before,
+.info-icon[title]::after,
+.tooltip-close[title]::before,
+.tooltip-close[title]::after {
+    display: none !important;
+}
