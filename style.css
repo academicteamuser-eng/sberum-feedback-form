@@ -745,7 +745,7 @@ select option {
 }
 
 /* Улучшенный вид tooltip */
-.tooltip-content {
+/*.tooltip-content {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 5px;
@@ -767,7 +767,7 @@ select option {
 
 .tooltip-content::-webkit-scrollbar-thumb:hover {
     background: rgba(102, 126, 234, 0.5);
-}
+}*/
 
 /* Иконка закрытия для tooltip (если нужно сделать его кликабельным) */
 .tooltip-close {
