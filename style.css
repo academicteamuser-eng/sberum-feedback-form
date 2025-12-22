@@ -647,7 +647,7 @@ select option {
 .tooltip-left {
     right: calc(100% + 10px);
     top: 50%;
-    transform: translateY(-50%) translateX(10px);
+    transform: translateY(-50%) translateX(80px);
 }
 
 .tooltip-right {
@@ -701,7 +701,7 @@ select option {
 }
 
 .tooltip-left::after {
-    left: 120%;
+    left: 100%;
     top: 50%;
     transform: translateY(-50%);
     border-left-color: white;
