@@ -244,7 +244,7 @@ function createInfoIcons() {
         const icon = document.createElement('span');
         icon.className = 'info-icon';
        icon.textContent = 'i';
-        icon.title = 'Показать подсказку';
+        //icon.title = 'Показать подсказку';
         icon.setAttribute('aria-label', 'Информация');
         icon.setAttribute('role', 'button');
         icon.setAttribute('tabindex', '0');
@@ -265,9 +265,21 @@ function createInfoIcons() {
         closeButton.innerHTML = '×';
         closeButton.setAttribute('aria-label', 'Закрыть подсказку');
         closeButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            tooltip.classList.remove('active');
-            icon.focus();
+           e.preventDefault();
+    e.stopPropagation(); // Важно: предотвращаем всплытие
+    e.stopImmediatePropagation(); // Дополнительная защита
+    
+    // Закрываем tooltip
+    if (tooltip.classList.contains('active')) {
+        tooltip.classList.remove('active');
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
+    }
+    
+    // Возвращаем фокус на иконку
+    if (icon) {
+        icon.focus();
+    }
         });
         
         tooltip.appendChild(tooltipContent);
