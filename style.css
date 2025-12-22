@@ -628,7 +628,7 @@ select option {
     backdrop-filter: blur(10px);
     pointer-events: none;
     white-space: pre-line;
-    margin-left: 70%;
+    margin-left: 100%;
 }
 
 /* Позиционирование tooltip */
@@ -647,7 +647,7 @@ select option {
 .tooltip-left {
     right: calc(100% + 10px);
     top: 50%;
-    transform: translateY(-50%) translateX(80px);
+    transform: translateY(-50%) translateX(10px);
 }
 
 .tooltip-right {
