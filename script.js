@@ -1,4 +1,4 @@
-// Конфигурация Google Sheets
+// Конфигурация Google Sheets 
 const SHEET_CONFIG = {
     BUGS_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1SbZTe312_i2cu7EpjOvExLS2lGWkk61UxT5cBG4s0h4/edit?gid=78323318#gid=78323318',
     FEATURES_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1SbZTe312_i2cu7EpjOvExLS2lGWkk61UxT5cBG4s0h4/edit?gid=0#gid=0',
