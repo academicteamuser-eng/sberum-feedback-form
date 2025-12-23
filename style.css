@@ -653,7 +653,8 @@ select option {
 }
 
 .tooltip-top.active,
-.tooltip-bottom.active {
+.tooltip-bottom.active,
+{
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateX(-50%) translateY(0) !important;
@@ -672,6 +673,13 @@ select option {
     transform: translateY(-50%) translateX(10px);
 }
 
+.tooltip-left.active,
+.tooltip-right.active
+{
+    opacity: 1 !important;
+  visibility: visible !important;
+}
+
 /* Показать tooltip при наведении на info-icon */
 .info-icon:hover .tooltip,
 .info-icon:focus .tooltip,
@@ -687,12 +695,14 @@ select option {
 .info-icon:focus .tooltip-right,
 .info-icon.active .tooltip-right {
     transform: translateY(-50%) translateX(0);
+    opacity: 1 !important;
 }
 
 .info-icon:hover .tooltip-left,
 .info-icon:focus .tooltip-left,
 .info-icon.active .tooltip-left {
     transform: translateY(-50%) translateX(0);
+    opacity: 1 !important;
 }
 
 /* Стрелка у tooltip */
@@ -707,6 +717,7 @@ select option {
     left: 50%;
     transform: translateX(-50%);
     border-top-color: white;
+    opacity: 1 !important;
 }
 
 .tooltip-bottom::after {
@@ -714,6 +725,7 @@ select option {
     left: 50%;
     transform: translateX(-50%);
     border-bottom-color: white;
+    opacity: 1 !important;
 }
 
 .tooltip-left::after {
@@ -721,6 +733,7 @@ select option {
     top: 50%;
     transform: translateY(-50%);
     border-left-color: white;
+    opacity: 1 !important;
 }
 
 .tooltip-right::after {
@@ -728,6 +741,7 @@ select option {
     top: 50%;
     transform: translateY(-50%);
     border-right-color: white;
+    opacity: 1 !important;
 }
 
 /* Мобильная адаптация для tooltip */
