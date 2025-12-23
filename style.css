@@ -657,6 +657,23 @@ select option {
     background-color: #fff !important; /* белый */
    
 }
+.tooltip.tooltip-bottom {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: #fff !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) translateY(0) !important;
+    transition: none !important;
+}
+
+.tooltip.tooltip-bottom.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: #fff !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) translateY(0) !important;
+    transition: none !important;
+}
 
 .tooltip-top.active,
 .tooltip-bottom.active
