@@ -652,7 +652,7 @@ select option {
 .tooltip-bottom {
     top: calc(100% + 10px);
     left: 50%;
-  /*  transform: translateX(-50%) translateY(0);*/
+    transform: translateX(-50%) translateY(0);
     z-index: 9999 !important;
     background-color: #fff !important; /* белый */
    
@@ -663,7 +663,7 @@ select option {
 {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: translateX(-50%) translateY(0) !important;
+/*  transform: translateX(-50%) translateY(0) !important;*/
   pointer-events: auto !important;
     background-color: white;
 }
@@ -693,7 +693,7 @@ select option {
 .info-icon.active .tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+  /*  transform: translateX(-50%) translateY(0);*/
     pointer-events: auto;
 }
 
