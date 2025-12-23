@@ -297,7 +297,7 @@ function setupTooltipInteractions() {
     const tooltip = icon.querySelector('.tooltip');
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
-    function showTooltip(icon, tooltip) {
+    function showTooltip() {
       tooltip.classList.add('active');
       tooltip.style.opacity = '1';
       tooltip.style.visibility = 'visible';
