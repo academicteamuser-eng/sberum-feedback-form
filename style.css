@@ -651,6 +651,13 @@ select option {
     transform: translateX(-50%) translateY(10px);
 }
 
+.tooltip-bottom.active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
 .tooltip-left {
     right: calc(100% + 10px);
     top: 50%;
