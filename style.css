@@ -636,6 +636,7 @@ select option {
   visibility: visible !important;
   transform: translateX(-50%) translateY(0) !important;
   pointer-events: auto !important;
+    background-color: white;
 }
 
 /* Позиционирование tooltip */
@@ -643,6 +644,7 @@ select option {
     bottom: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%) translateY(10px);
+    background-color: white;
 }
 
 .tooltip-bottom {
@@ -650,6 +652,7 @@ select option {
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     z-index: 2000;
+    background-color: white;
 }
 
 .tooltip-top.active,
@@ -659,6 +662,7 @@ select option {
   visibility: visible !important;
   transform: translateX(-50%) translateY(0) !important;
   pointer-events: auto !important;
+    background-color: white;
 }
 
 .tooltip-left {
