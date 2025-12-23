@@ -605,11 +605,12 @@ select option {
 .tooltip-container {
     position: relative;
     display: inline-block;
-    background: white;
+    
 }
 
 /* Сам tooltip */
 .tooltip {
+    transition: none !important;
     position: absolute;
     background: white;
     color: #2d3748;
@@ -621,10 +622,10 @@ select option {
     width: 300px;
     max-width: 90vw;
     z-index: 1000;
-    opacity: 0;
+    opacity: 1;
     visibility: hidden;
     transform: translateY(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);*/
     border: 1px solid rgba(0, 0, 0, 0.08);
    /* backdrop-filter: blur(10px);*/
     pointer-events: none;
