@@ -605,6 +605,7 @@ select option {
 .tooltip-container {
     position: relative;
     display: inline-block;
+    background: white;
 }
 
 /* Сам tooltip */
