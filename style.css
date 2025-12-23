@@ -628,7 +628,7 @@ select option {
    /* backdrop-filter: blur(10px);*/
     pointer-events: none;
     white-space: pre-line;
-   /* margin-left: 100%;*/
+   margin-left: 100%;
 }
 
 .tooltip.active {
