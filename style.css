@@ -631,6 +631,13 @@ select option {
     margin-left: 100%;
 }
 
+.tooltip.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) !important;
+  pointer-events: auto !important;
+}
+
 /* Позиционирование tooltip */
 .tooltip-top {
     bottom: calc(100% + 10px);
