@@ -649,8 +649,7 @@ select option {
     top: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-     opacity: 1 !important;
-  visibility: visible !important;
+    z-index: 2000;
 }
 
 .tooltip-top.active,
