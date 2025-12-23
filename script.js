@@ -372,7 +372,7 @@ function setupTooltipInteractions() {
       });
     }
   });
-}
+
 
 // Вызов setupTooltipInteractions() после создания иконок и tooltip (у тебя в DOMContentLoaded)
 document.addEventListener('DOMContentLoaded', function() {
