@@ -299,10 +299,10 @@ function setupTooltipInteractions() {
 
     function showTooltip() {
       tooltip.classList.add('active');
-      tooltip.style.opacity = '1';
-      tooltip.style.visibility = 'visible';
-        tooltip.style.transform = 'translateX(-50%) translateY(0)';
-        tooltip.style.pointerEvents = 'auto';
+    //  tooltip.style.opacity = '1';
+    //  tooltip.style.visibility = 'visible';
+   //     tooltip.style.transform = 'translateX(-50%) translateY(0)';
+     //   tooltip.style.pointerEvents = 'auto';
         // Корректируем позицию
   adjustTooltipPosition(tooltip, icon);
     }
@@ -333,7 +333,7 @@ function adjustTooltipPosition(tooltip, icon) {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
     //    tooltip.style.opacity = '0';
-        tooltip.style.visibility = 'hidden';
+    //    tooltip.style.visibility = 'hidden';
       }
     }
 
