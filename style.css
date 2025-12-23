@@ -652,14 +652,8 @@ select option {
     left: 50%;
     transform: translateX(-50%) translateY(0);
     z-index: 2000;
-   
-     transition: none !important;
     background-color: #fff !important; /* белый */
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+   
 }
 
 .tooltip-top.active,
