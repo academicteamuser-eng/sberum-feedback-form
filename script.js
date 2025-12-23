@@ -270,8 +270,8 @@ function createInfoIcons() {
     e.stopPropagation();
 
     tooltip.classList.remove('active');
-    tooltip.style.opacity = '0';
-    tooltip.style.visibility = 'hidden';
+//    tooltip.style.opacity = '0';
+ //   tooltip.style.visibility = 'hidden';
 
     icon.focus();
 
