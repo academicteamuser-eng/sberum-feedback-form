@@ -652,10 +652,16 @@ select option {
 }
 
 .tooltip-bottom.active {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+   transform: translateX(-50%) translateY(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+.tooltip-top.active {
+   transform: translateX(-50%) translateY(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 .tooltip-left {
