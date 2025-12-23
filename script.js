@@ -332,7 +332,7 @@ function adjustTooltipPosition(tooltip, icon) {
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
-    //    tooltip.style.opacity = '0';
+        tooltip.style.opacity = '0';
         tooltip.style.visibility = 'hidden';
       }
     }
@@ -354,14 +354,14 @@ function adjustTooltipPosition(tooltip, icon) {
       if (tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('pinned');
         tooltip.classList.remove('active');
-       // tooltip.style.opacity = '0';
-    //    tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
       } else {
         // Скрываем все закрепленные тултипы
         document.querySelectorAll('.tooltip.pinned').forEach(tip => {
           tip.classList.remove('pinned', 'active');
-         // tip.style.opacity = '0';
-        //  tip.style.visibility = 'hidden';
+          tip.style.opacity = '0';
+         tip.style.visibility = 'hidden';
         });
 
         tooltip.classList.add('pinned');
@@ -374,8 +374,8 @@ function adjustTooltipPosition(tooltip, icon) {
       e.stopPropagation();
 
       tooltip.classList.remove('pinned', 'active');
-     // tooltip.style.opacity = '0';
-   //   tooltip.style.visibility = 'hidden';
+      tooltip.style.opacity = '0';
+      tooltip.style.visibility = 'hidden';
 
       icon.focus();
     });
