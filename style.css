@@ -652,27 +652,10 @@ select option {
 .tooltip-bottom {
     top: calc(100% + 10px);
     left: 50%;
-    transform: translateX(-50%) translateY(0);
+  /*  transform: translateX(-50%) translateY(0);*/
     z-index: 9999 !important;
     background-color: #fff !important; /* белый */
    
-}
-.tooltip.tooltip-bottom {
-    opacity: 1 !important;
-    visibility: visible !important;
-    background-color: #fff !important;
-    pointer-events: auto !important;
-    transform: translateX(-50%) translateY(0) !important;
-    transition: none !important;
-}
-
-.tooltip.tooltip-bottom.active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    background-color: #fff !important;
-    pointer-events: auto !important;
-    transform: translateX(-50%) translateY(0) !important;
-    transition: none !important;
 }
 
 .tooltip-top.active,
