@@ -621,7 +621,7 @@ select option {
     line-height: 1.6;
     width: 300px;
     max-width: 90vw;
-    z-index: 1000;
+   
     opacity: 1;
     visibility: hidden;
     transform: translateY(10px);
@@ -631,6 +631,7 @@ select option {
     pointer-events: none;
     white-space: pre-line;
    margin-left: 100%;
+    z-index: 9999 !important;
 }
 
 .tooltip.active {
@@ -639,6 +640,7 @@ select option {
   transform: translateX(-50%) translateY(0) !important;
   pointer-events: auto !important;
     background-color: white;
+    z-index: 9999 !important;
 }
 
 /* Позиционирование tooltip */
