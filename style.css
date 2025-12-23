@@ -653,7 +653,7 @@ select option {
 }
 
 .tooltip-top.active,
-.tooltip-bottom.active,
+.tooltip-bottom.active
 {
   opacity: 1 !important;
   visibility: visible !important;
