@@ -189,210 +189,103 @@ fileInput.addEventListener('change', (event) => {
 
 // ========== ИНФОРМАЦИОННЫЕ ИКОНКИ С ПОДСКАЗКАМИ ==========
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Создаем иконки с tooltip
-    createInfoIcons();
-    
-    // Обработчики для tooltip
-    setupTooltipInteractions();
+    document.addEventListener('DOMContentLoaded', function() {
+  // Получаем все иконки с подсказками
+  const infoIcons = document.querySelectorAll('.info-icon');
+
+  infoIcons.forEach(icon => {
+    const tooltip = icon.querySelector('.tooltip');
+    const closeBtn = icon.querySelector('.tooltip-close');
+
+    // Функция показать подсказку
+    function showTooltip() {
+      tooltip.classList.add('active');
+      tooltip.style.opacity = '1';
+      tooltip.style.visibility = 'visible';
+    }
+
+    // Функция скрыть подсказку
+    function hideTooltip() {
+      if (!tooltip.classList.contains('pinned')) {
+        tooltip.classList.remove('active');
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
+      }
+    }
+
+    // Наведение мыши — показываем (если не закреплён)
+    icon.addEventListener('mouseenter', () => {
+      if (!tooltip.classList.contains('pinned')) {
+        showTooltip();
+      }
+    });
+
+    // Уход мыши — скрываем (если не закреплён)
+    icon.addEventListener('mouseleave', () => {
+      hideTooltip();
+    });
+
+    // Клик по иконке — фиксируем или снимаем фиксацию
+    icon.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (tooltip.classList.contains('pinned')) {
+        // Уже закреплена — убираем фиксацию и скрываем
+        tooltip.classList.remove('pinned');
+        hideTooltip();
+      } else {
+        // Фиксируем подсказку — показываем постоянно
+        // Сначала прячем все другие подсказки
+        document.querySelectorAll('.tooltip.pinned').forEach(tip => {
+          tip.classList.remove('pinned');
+          tip.style.opacity = '0';
+          tip.style.visibility = 'hidden';
+          tip.classList.remove('active');
+        });
+
+        tooltip.classList.add('pinned');
+        showTooltip();
+      }
+    });
+
+    // Крестик закрытия — прячет и снимает фиксацию
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      tooltip.classList.remove('pinned');
+      tooltip.classList.remove('active');
+      tooltip.style.opacity = '0';
+      tooltip.style.visibility = 'hidden';
+
+      icon.focus();
+    });
+  });
+
+  // Клик вне подсказок и иконок — закрываем все и сбрасываем фиксацию
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+      tooltip.classList.remove('pinned');
+      tooltip.classList.remove('active');
+      tooltip.style.opacity = '0';
+      tooltip.style.visibility = 'hidden';
+    });
+  });
+
+  // Закрытие по Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+        tooltip.classList.remove('pinned');
+        tooltip.classList.remove('active');
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
+      });
+    }
+  });
 });
 
-function createInfoIcons() {
-    // Массив полей и их подсказок
-    const tooltips = [
-        {
-            fieldId: 'improvementGroup',
-            tooltipText: '1. Создать задание / войти в конструктор контента\n2. Добавить текстовый блок\n3. Написать текст\n4. Выделить текст в рамку'
-        },
-        {
-            fieldId: 'suggestionGroup',
-            tooltipText: 'Ожидаемый: можно выбрать ширину рамки, либо, чтобы она заканчивалась сразу после текста, либо чтобы она была на всю ширину строки\nФактический: регулировать ширину нельзя, рамка растягивается на всю строку'
-        },
-        {
-            fieldId: 'purposeGroup',
-            tooltipText: 'Это позволит снизить нагрузку на худредакцию, т.к. откроет больше возможностей для самостоятельного оформления контента на платформе'
-        },
-        {
-            fieldId: 'bugDescriptionGroup',
-            tooltipText: '1. Создать задание / войти в конструктор заданий\n2. Создать вопрос с типом ответа "выбор варианта"\n3. В варианте ответа написать формулу\n\nИЛИ\n\nСгенерировать вопросы с выбором ответа по математике, предполагающие использование формул (например по запросу "формулы сокращенного умножения")'
-        },
-        {
-            fieldId: 'resultsGroup',
-            tooltipText: 'Ожидаемый: доступно добавление формул вручную, работает преобразование формул из записи с $$\nФактический: не доступно добавление формул, не реализовано преобразование формул из записи с $$'
-        }
-    ];
-    
-    tooltips.forEach(({ fieldId, tooltipText }) => {
-        const field = document.getElementById(fieldId);
-        if (!field) return;
-        
-        const label = field.querySelector('label');
-        if (!label) return;
-        
-        // Удаляем существующую иконку, если есть
-        const existingIcon = label.querySelector('.info-icon');
-        if (existingIcon) existingIcon.remove();
-        
-        // Создаем контейнер для иконки
-        const iconContainer = document.createElement('span');
-        iconContainer.className = 'tooltip-container';
-        iconContainer.style.display = 'inline-flex';
-        iconContainer.style.alignItems = 'center';
-        iconContainer.style.marginLeft = '8px';
-        
-        // Создаем иконку
-        const icon = document.createElement('span');
-        icon.className = 'info-icon';
-       icon.textContent = 'i';
-        //icon.title = 'Показать подсказку';
-        icon.setAttribute('aria-label', 'Информация');
-        icon.setAttribute('role', 'button');
-        icon.setAttribute('tabindex', '0');
-        
-        // Создаем tooltip
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip tooltip-top';
-        tooltip.setAttribute('role', 'tooltip');
-        
-        // Добавляем контент в tooltip
-        const tooltipContent = document.createElement('div');
-        tooltipContent.className = 'tooltip-content';
-        tooltipContent.textContent = tooltipText;
-        
-        // Добавляем кнопку закрытия
-        const closeButton = document.createElement('button');
-        closeButton.className = 'tooltip-close';
-        closeButton.innerHTML = '×';
-        closeButton.setAttribute('aria-label', 'Закрыть подсказку');
-        
-        closeButton.addEventListener('click', function(e) {
-           e.preventDefault();
-    e.stopPropagation();
-
-    tooltip.classList.remove('active');
-    tooltip.style.opacity = '0';
-    tooltip.style.visibility = 'hidden';
-
-    icon.focus();
-
-    console.log('Tooltip closed with cross button');
-        });
-        
-        tooltip.appendChild(tooltipContent);
-        tooltip.appendChild(closeButton);
-        
-        // Добавляем иконку и tooltip в контейнер
-        icon.appendChild(tooltip);
-        iconContainer.appendChild(icon);
-        
-        // Добавляем контейнер в label
-        label.appendChild(iconContainer);
-    });
-}
-
-function setupTooltipInteractions() {
-    // Делегирование событий для tooltip
-    document.addEventListener('mouseover', function(e) {
-      const icon = e.target.closest('.info-icon');
-        const closeBtn = e.target.closest('.tooltip-close');
-        
-        // Если навели на крестик - ничего не делаем
-        if (closeBtn) return;
-        
-        if (icon) {
-            // Закрываем другие открытые tooltip
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-                if (tooltip !== icon.querySelector('.tooltip')) {
-                    tooltip.classList.remove('active');
-                    tooltip.style.opacity = '0';
-                    tooltip.style.visibility = 'hidden';
-                }
-            });
-            
-            // Показываем текущий tooltip
-            const tooltip = icon.querySelector('.tooltip');
-            if (tooltip) {
-                tooltip.classList.add('active');
-                tooltip.style.opacity = '1';
-                tooltip.style.visibility = 'visible';
-            }
-        }
-    });
-    
-    // Клик по иконке или в любом месте
-    document.addEventListener('click', function(e) {
-       const icon = e.target.closest('.info-icon');
-        const closeBtn = e.target.closest('.tooltip-close');
-        const tooltipElement = e.target.closest('.tooltip');
-        
-        // Клик на крестик - закрываем tooltip
-        if (closeBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const tooltip = closeBtn.closest('.tooltip');
-            if (tooltip) {
-                tooltip.classList.remove('active');
-                tooltip.style.opacity = '0';
-                tooltip.style.visibility = 'hidden';
-                
-                // Возвращаем фокус на иконку
-                const parentIcon = tooltip.closest('.info-icon');
-                if (parentIcon) {
-                    parentIcon.focus();
-                }
-            }
-            return;
-        }
-        
-        // Клик на иконку
-        if (icon) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const tooltip = icon.querySelector('.tooltip');
-            if (tooltip) {
-                const isActive = tooltip.classList.contains('active');
-                
-                // Закрываем все tooltip
-                document.querySelectorAll('.tooltip.active').forEach(t => {
-                    t.classList.remove('active');
-                    t.style.opacity = '0';
-                    t.style.visibility = 'hidden';
-                });
-                
-                // Если tooltip не был активен, показываем его
-                if (!isActive) {
-                    tooltip.classList.add('active');
-                    tooltip.style.opacity = '1';
-                    tooltip.style.visibility = 'visible';
-                }
-            }
-        } 
-        // Клик на сам tooltip (не на крестик) - ничего не делаем
-        else if (tooltipElement) {
-            e.stopPropagation();
-        }
-        // Клик вне tooltip и иконки - закрываем все
-        else {
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-                tooltip.classList.remove('active');
-                tooltip.style.opacity = '0';
-                tooltip.style.visibility = 'hidden';
-            });
-        }
-    });
-    
-    // Закрытие по Escape
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-                tooltip.classList.remove('active');
-                tooltip.style.opacity = '0';
-                tooltip.style.visibility = 'hidden';
-            });
-        }
-    });
     
     // Управление с клавиатуры
     document.addEventListener('keydown', function(e) {
