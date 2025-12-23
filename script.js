@@ -305,10 +305,8 @@ function setupTooltipInteractions() {
      //   tooltip.style.pointerEvents = 'auto';
         // Корректируем позицию
   adjustTooltipPosition(tooltip, icon);
-    }
-      
-      
-//Позиционирование подсказки
+
+        //Позиционирование подсказки
 function adjustTooltipPosition(tooltip, icon) {
   const tooltipRect = tooltip.getBoundingClientRect();
   const iconRect = icon.getBoundingClientRect();
@@ -328,6 +326,8 @@ function adjustTooltipPosition(tooltip, icon) {
     tooltip.classList.add('tooltip-bottom');
   }
 }
+    }
+      
       
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
