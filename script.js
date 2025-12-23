@@ -297,7 +297,7 @@ function createInfoIcons() {
 function setupTooltipInteractions() {
     // Делегирование событий для tooltip
     document.addEventListener('mouseover', function(e) {
-      //  const icon = e.target.closest('.info-icon');
+      const icon = e.target.closest('.info-icon');
         const closeBtn = e.target.closest('.tooltip-close');
         
         // Если навели на крестик - ничего не делаем
@@ -325,7 +325,7 @@ function setupTooltipInteractions() {
     
     // Клик по иконке или в любом месте
     document.addEventListener('click', function(e) {
-       // const icon = e.target.closest('.info-icon');
+       const icon = e.target.closest('.info-icon');
         const closeBtn = e.target.closest('.tooltip-close');
         const tooltipElement = e.target.closest('.tooltip');
         
