@@ -301,8 +301,32 @@ function setupTooltipInteractions() {
       tooltip.classList.add('active');
       tooltip.style.opacity = '1';
       tooltip.style.visibility = 'visible';
+        // Корректируем позицию
+  adjustTooltipPosition(tooltip, icon);
     }
+      
+//Позиционирование подсказки
+function adjustTooltipPosition(tooltip, icon) {
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const iconRect = icon.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
 
+  // Проверяем, помещается ли подсказка ниже иконки
+  const spaceBelow = viewportHeight - iconRect.bottom;
+  const spaceAbove = iconRect.top;
+
+  // Убираем все позиционные классы
+  tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
+
+  if (spaceBelow < tooltipRect.height && spaceAbove > tooltipRect.height) {
+    // Помещается сверху — показываем сверху
+    tooltip.classList.add('tooltip-top');
+  } else {
+    // Иначе снизу
+    tooltip.classList.add('tooltip-bottom');
+  }
+}
+      
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
