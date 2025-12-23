@@ -653,6 +653,7 @@ select option {
     transform: translateX(-50%) translateY(10px);
     z-index: 2000;
     background-color: white;
+     transition: none !important;
 }
 
 .tooltip-top.active,
