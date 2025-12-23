@@ -301,6 +301,8 @@ function setupTooltipInteractions() {
       tooltip.classList.add('active');
       tooltip.style.opacity = '1';
       tooltip.style.visibility = 'visible';
+        tooltip.style.transform = 'translateX(-50%) translateY(0)';
+        tooltip.style.pointerEvents = 'auto';
         // Корректируем позицию
   adjustTooltipPosition(tooltip, icon);
     }
