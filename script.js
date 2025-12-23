@@ -332,7 +332,7 @@ function adjustTooltipPosition(tooltip, icon) {
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
-        tooltip.style.opacity = '0';
+    //    tooltip.style.opacity = '0';
         tooltip.style.visibility = 'hidden';
       }
     }
