@@ -291,21 +291,18 @@ function createInfoIcons() {
 }
 
 function setupTooltipInteractions() {
-   function setupTooltipInteractions() {
   const infoIcons = document.querySelectorAll('.info-icon');
 
   infoIcons.forEach(icon => {
     const tooltip = icon.querySelector('.tooltip');
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
-    // Показать подсказку
     function showTooltip() {
       tooltip.classList.add('active');
       tooltip.style.opacity = '1';
       tooltip.style.visibility = 'visible';
     }
 
-    // Скрыть подсказку (только если не закреплена)
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
@@ -314,43 +311,39 @@ function setupTooltipInteractions() {
       }
     }
 
-    // Наведение мыши — показываем
     icon.addEventListener('mouseenter', () => {
       if (!tooltip.classList.contains('pinned')) {
         showTooltip();
       }
     });
 
-    // Уход мыши — скрываем, если не закреплена
     icon.addEventListener('mouseleave', () => {
       hideTooltip();
     });
 
-    // Клик по иконке — переключаем закрепление
-    icon.addEventListener('click', (e) => {
+    icon.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
 
       if (tooltip.classList.contains('pinned')) {
-        // Снимаем закрепление и скрываем
         tooltip.classList.remove('pinned');
-        hideTooltip();
+        tooltip.classList.remove('active');
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
       } else {
-        // Снимаем закрепление у всех остальных и скрываем их
+        // Скрываем все закрепленные тултипы
         document.querySelectorAll('.tooltip.pinned').forEach(tip => {
           tip.classList.remove('pinned', 'active');
           tip.style.opacity = '0';
           tip.style.visibility = 'hidden';
         });
 
-        // Закрепляем текущую и показываем
         tooltip.classList.add('pinned');
         showTooltip();
       }
     });
 
-    // Кнопка закрытия
-    closeBtn.addEventListener('click', (e) => {
+    closeBtn.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -362,7 +355,6 @@ function setupTooltipInteractions() {
     });
   });
 
-  // Клик вне - закрываем все подсказки и снимаем закрепления
   document.addEventListener('click', () => {
     document.querySelectorAll('.tooltip.active').forEach(tooltip => {
       tooltip.classList.remove('pinned', 'active');
@@ -371,8 +363,7 @@ function setupTooltipInteractions() {
     });
   });
 
-  // Закрытие по Escape
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.tooltip.active').forEach(tooltip => {
         tooltip.classList.remove('pinned', 'active');
