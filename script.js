@@ -311,18 +311,17 @@ function adjustTooltipPosition(tooltip, icon) {
   const iconRect = icon.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 
-  // Проверяем, помещается ли подсказка ниже иконки
+  // Проверяем доступное место снизу и сверху иконки
   const spaceBelow = viewportHeight - iconRect.bottom;
   const spaceAbove = iconRect.top;
 
-  // Убираем все позиционные классы
+  // Убираем классы позиционирования
   tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
 
-  if (spaceBelow < tooltipRect.height && spaceAbove > tooltipRect.height) {
-    // Помещается сверху — показываем сверху
+  // Выбираем позицию показывать сверху, если снизу мало места
+  if (spaceBelow < tooltipRect.height + 10 && spaceAbove > tooltipRect.height + 10) {
     tooltip.classList.add('tooltip-top');
   } else {
-    // Иначе снизу
     tooltip.classList.add('tooltip-bottom');
   }
 }
