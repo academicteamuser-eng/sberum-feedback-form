@@ -264,22 +264,18 @@ function createInfoIcons() {
         closeButton.className = 'tooltip-close';
         closeButton.innerHTML = '×';
         closeButton.setAttribute('aria-label', 'Закрыть подсказку');
+        
         closeButton.addEventListener('click', function(e) {
            e.preventDefault();
-    e.stopPropagation(); // Важно: предотвращаем всплытие
-    e.stopImmediatePropagation(); // Дополнительная защита
-    
-    // Закрываем tooltip
-    if (tooltip.classList.contains('active')) {
-        tooltip.classList.remove('active');
-        tooltip.style.opacity = '0';
-        tooltip.style.visibility = 'hidden';
-    }
-    
-    // Возвращаем фокус на иконку
-    if (icon) {
-        icon.focus();
-    }
+    e.stopPropagation();
+
+    tooltip.classList.remove('active');
+    tooltip.style.opacity = '0';
+    tooltip.style.visibility = 'hidden';
+
+    icon.focus();
+
+    console.log('Tooltip closed with cross button');
         });
         
         tooltip.appendChild(tooltipContent);
