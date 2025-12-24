@@ -354,5 +354,27 @@ function setupTooltipInteractions() {
       if (parent) parent.classList.remove('active-parent');
     });
   });
+
+    //Позиционирование подсказки
+function adjustTooltipPosition(tooltip, icon) {
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const iconRect = icon.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+
+  // Проверяем доступное место снизу и сверху иконки
+  const spaceBelow = viewportHeight - iconRect.bottom;
+  const spaceAbove = iconRect.top;
+
+  // Убираем классы позиционирования
+  tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
+
+  // Выбираем позицию показывать сверху, если снизу мало места
+  if (spaceBelow < tooltipRect.height + 10 && spaceAbove > tooltipRect.height + 10) {
+    tooltip.classList.add('tooltip-top');
+  } else {
+    tooltip.classList.add('tooltip-bottom');
+  }
+}
+    }
 }
 
