@@ -590,6 +590,7 @@ select option {
     position: relative;
     transition: all 0.2s ease;
     user-select: none;
+    z-index: 1000;
 }
 
 .info-icon:hover {
