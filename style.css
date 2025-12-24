@@ -591,6 +591,7 @@ select option {
     transition: all 0.2s ease;
     user-select: none;
     z-index: 1000;
+    isolation: isolate;
 }
 
 .info-icon:hover {
@@ -632,7 +633,7 @@ select option {
   backdrop-filter: blur(10px);
     pointer-events: none;
     white-space: pre-line;
-   margin-left: 100%;
+  /*  margin-left: 100%;*/
     z-index: 1000;
 }
 
