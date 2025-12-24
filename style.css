@@ -575,165 +575,104 @@ select option {
 
 /* ========== СТИЛИ ДЛЯ ИНФОРМАЦИОННЫХ ИКОНОК ========== */
 
-/* Контейнер для tooltip */
+.main-content {
+    overflow: visible !important; /* Чтобы подсказки не обрезались краями формы */
+}
+
+/* 2. Чистые стили для всей группы подсказок */
 .tooltip-container {
     position: relative;
     display: inline-flex;
     align-items: center;
-    isolation: isolate; /* Важно: создает отдельный слой */
-    z-index: 10;
+    vertical-align: middle;
+    z-index: 9999; /* Вся группа должна быть выше полей ввода */
 }
 
 .info-icon {
-    position: relative;
-    z-index: 1 !important; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    color: #667eea;
     background: rgba(102, 126, 234, 0.1);
-}
-
-.info-icon:hover {
-    background: rgba(102, 126, 234, 0.2);
-    transform: scale(1.1);
-    isolation: isolate;
+    border-radius: 50%;
+    margin-left: 8px;
+    cursor: help;
+    transition: all 0.2s;
+    position: relative;
     z-index: 1;
 }
 
-.info-icon:active {
-    transform: scale(0.95);
-    isolation: isolate;
-    z-index: 1;
+/* СЕКРЕТ: когда подсказка активна, мы делаем саму иконку прозрачной */
+.info-icon.active {
+    background: transparent !important;
+    color: transparent !important;
 }
 
-
-/* Сам tooltip */
 .tooltip {
-   position: absolute;
-    background-color: #ffffff !important; /* Белый фон без прозрачности */
+    position: absolute;
+    background: #ffffff !important;
     color: #2d3748;
     padding: 16px 20px;
     border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     width: 300px;
     max-width: 90vw;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid #e2e8f0;
+    white-space: pre-line;
+    
+    /* Состояние "скрыто" */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    z-index: 9999 !important; /* Самый высокий приоритет */
+    z-index: 10000 !important;
     
-    /* Центрируем ровно по иконке */
-    left: 50% !important; 
+    /* Центрирование */
+    left: 50% !important;
     transform: translateX(-50%) translateY(10px);
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
+    transition: opacity 0.3s, transform 0.3s;
 }
 
+/* Состояние "показано" */
 .tooltip.active {
- opacity: 1 !important;
+    opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
     transform: translateX(-50%) translateY(0) !important;
 }
 
-/* Позиционирование tooltip */
-.tooltip-top {
-    bottom: calc(100% + 10px);
-}
+/* Позиции */
+.tooltip-top { bottom: calc(100% + 15px); }
+.tooltip-bottom { top: calc(100% + 15px); }
 
-.tooltip-bottom {
-     top: calc(100% + 10px);
-   
-}
-
-.tooltip-top.active,
-.tooltip-bottom.active
-{
-  opacity: 1 !important;
-  visibility: visible !important;
- transform: translateX(-50%) translateY(0) !important;
-  pointer-events: auto !important;
-    background-color: white;
-}
-
-.tooltip-left {
-    right: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-}
-
-.tooltip-right {
-    left: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-}
-
-.tooltip-left.active,
-.tooltip-right.active
-{
-    opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Показать tooltip при наведении на info-icon */
-/*.info-icon:hover .tooltip,
-.info-icon:focus .tooltip,
-.info-icon.active .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-}*/
-
-/* Для tooltip-right и tooltip-left */
-/*.info-icon:hover .tooltip-right,
-.info-icon:focus .tooltip-right,
-.info-icon.active .tooltip-right {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1 !important;
-}*/
-
-/*.info-icon:hover .tooltip-left,
-.info-icon:focus .tooltip-left,
-.info-icon.active .tooltip-left {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1 !important;
-}*/
-
-/* Стрелка у tooltip */
+/* Стрелочка */
 .tooltip::after {
     content: '';
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     border: 8px solid transparent;
 }
+.tooltip-top::after { top: 100%; border-top-color: #fff; }
+.tooltip-bottom::after { bottom: 100%; border-bottom-color: #fff; }
 
-.tooltip-top::after {
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-top-color: white;
-    opacity: 1 !important;
-}
-
-.tooltip-bottom::after {
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-bottom-color: white;
-    opacity: 1 !important;
-}
-
-.tooltip-left::after {
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-left-color: white;
-    opacity: 1 !important;
-}
-
-.tooltip-right::after {
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-right-color: white;
-    opacity: 1 !important;
+.tooltip-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    border-radius: 50%;
+    font-size: 14px;
 }
 
 /* Мобильная адаптация для tooltip */
@@ -767,42 +706,3 @@ select option {
     }
 }
 
-/* Иконка закрытия для tooltip (если нужно сделать его кликабельным) */
-.tooltip-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 12px;
-    color: #4a5568;
-    transition: all 0.2s ease;
-}
-
-.tooltip-close:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: #2d3748;
-}
-.info-icon,
-.tooltip-close {
-    pointer-events: auto !important;
-}
-
-/* Убираем стандартный tooltip */
-.info-icon[title],
-.tooltip-close[title] {
-    position: relative;
-}
-
-.info-icon[title]::before,
-.info-icon[title]::after,
-.tooltip-close[title]::before,
-.tooltip-close[title]::after {
-    display: none !important;
-}
