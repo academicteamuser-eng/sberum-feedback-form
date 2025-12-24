@@ -270,8 +270,8 @@ function createInfoIcons() {
     e.stopPropagation();
 
     tooltip.classList.remove('active');
-    tooltip.style.opacity = '0';
-    tooltip.style.visibility = 'hidden';
+   // tooltip.style.opacity = '0';
+   // tooltip.style.visibility = 'hidden';
 
     icon.focus();
 
@@ -298,44 +298,62 @@ function setupTooltipInteractions() {
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
     function showTooltip() {
-      tooltip.classList.add('active');
-    //  tooltip.style.opacity = '1';
-    //  tooltip.style.visibility = 'visible';
-   //     tooltip.style.transform = 'translateX(-50%) translateY(0)';
-     //   tooltip.style.pointerEvents = 'auto';
-        // Корректируем позицию
+  // Шаг 1: Временно делаем tooltip видимым вне экрана для точного измерения
+  const originalPosition = tooltip.style.position;
+  const originalTop = tooltip.style.top;
+  const originalLeft = tooltip.style.left;
+  const originalVisibility = tooltip.style.visibility;
+  const originalOpacity = tooltip.style.opacity;
+
+  tooltip.style.position = 'fixed';
+  tooltip.style.top = '-9999px';
+  tooltip.style.left = '-9999px';
+  tooltip.style.visibility = 'visible';
+  tooltip.style.opacity = '1'; // Временно, для реального размера
+
+  // Принудительный reflow для пересчёта размеров
+  tooltip.offsetHeight;
+
+  // Теперь позиционируем
   adjustTooltipPosition(tooltip, icon);
 
-        //Позиционирование подсказки
+  // Возвращаем оригинальные стили (чтобы не ломать позицию)
+  tooltip.style.position = originalPosition;
+  tooltip.style.top = originalTop;
+  tooltip.style.left = originalLeft;
+  tooltip.style.visibility = originalVisibility;
+  tooltip.style.opacity = originalOpacity;
+
+  // Шаг 2: Показываем нормально
+  tooltip.classList.add('active');
+  tooltip.style.visibility = 'visible';
+  tooltip.style.opacity = '1'; // На всякий случай, но можно убрать, если CSS .active берёт на себя
+}
+
 function adjustTooltipPosition(tooltip, icon) {
   const tooltipRect = tooltip.getBoundingClientRect();
   const iconRect = icon.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 
-  // Проверяем доступное место снизу и сверху иконки
   const spaceBelow = viewportHeight - iconRect.bottom;
   const spaceAbove = iconRect.top;
 
-  // Убираем классы позиционирования
   tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
 
-  // Выбираем позицию показывать сверху, если снизу мало места
   if (spaceBelow < tooltipRect.height + 10 && spaceAbove > tooltipRect.height + 10) {
     tooltip.classList.add('tooltip-top');
   } else {
     tooltip.classList.add('tooltip-bottom');
   }
 }
-    }
-      
       
     function hideTooltip() {
-      if (!tooltip.classList.contains('pinned')) {
-        tooltip.classList.remove('active');
-    //    tooltip.style.opacity = '0';
-    //    tooltip.style.visibility = 'hidden';
-      }
-    }
+     if (!tooltip.classList.contains('pinned')) {
+    tooltip.classList.remove('active');
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.opacity = '0';
+  }
+}
 
     icon.addEventListener('mouseenter', () => {
       if (!tooltip.classList.contains('pinned')) {
@@ -384,8 +402,8 @@ function adjustTooltipPosition(tooltip, icon) {
   document.addEventListener('click', () => {
     document.querySelectorAll('.tooltip.active').forEach(tooltip => {
       tooltip.classList.remove('pinned', 'active');
-      tooltip.style.opacity = '0';
-      tooltip.style.visibility = 'hidden';
+   //   tooltip.style.opacity = '0';
+ //     tooltip.style.visibility = 'hidden';
     });
   });
 
@@ -393,8 +411,8 @@ function adjustTooltipPosition(tooltip, icon) {
     if (e.key === 'Escape') {
       document.querySelectorAll('.tooltip.active').forEach(tooltip => {
         tooltip.classList.remove('pinned', 'active');
-        tooltip.style.opacity = '0';
-        tooltip.style.visibility = 'hidden';
+     //   tooltip.style.opacity = '0';
+    //    tooltip.style.visibility = 'hidden';
       });
     }
   });
