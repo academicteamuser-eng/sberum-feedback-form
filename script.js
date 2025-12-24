@@ -281,9 +281,10 @@ function createInfoIcons() {
         tooltip.appendChild(tooltipContent);
         tooltip.appendChild(closeButton);
         
-        // Добавляем иконку и tooltip в контейнер
-        icon.appendChild(tooltip);
-        iconContainer.appendChild(icon);
+       // ВАЖНО: Добавляем иконку и подсказку как СОСЕДЕЙ
+        iconContainer.appendChild(icon); // Сначала иконку
+        iconContainer.appendChild(tooltip); // Затем подсказку рядом
+        
         
         // Добавляем контейнер в label
         label.appendChild(iconContainer);
@@ -294,7 +295,8 @@ function setupTooltipInteractions() {
   const infoIcons = document.querySelectorAll('.info-icon');
 
   infoIcons.forEach(icon => {
-    const tooltip = icon.querySelector('.tooltip');
+    // Теперь ищем подсказку как следующий элемент за иконкой
+    const tooltip = icon.nextElementSibling; 
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
     function showTooltip() {
