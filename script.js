@@ -375,6 +375,6 @@ function adjustTooltipPosition(tooltip, icon) {
     tooltip.classList.add('tooltip-bottom');
   }
 }
-    }
+    
 }
 
