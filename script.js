@@ -295,71 +295,40 @@ function setupTooltipInteractions() {
   const infoIcons = document.querySelectorAll('.info-icon');
 
   infoIcons.forEach(icon => {
-    // Теперь ищем подсказку как следующий элемент за иконкой
     const tooltip = icon.nextElementSibling; 
+    const container = icon.closest('.tooltip-container'); // Находим родителя
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
     function showTooltip() {
       tooltip.classList.add('active');
-     //   icon.classList.add('active');
-        // Корректируем позицию
-  adjustTooltipPosition(tooltip, icon);
-
-        //Позиционирование подсказки
-function adjustTooltipPosition(tooltip, icon) {
-  const tooltipRect = tooltip.getBoundingClientRect();
-  const iconRect = icon.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-
-  // Проверяем доступное место снизу и сверху иконки
-  const spaceBelow = viewportHeight - iconRect.bottom;
-  const spaceAbove = iconRect.top;
-
-  // Убираем классы позиционирования
-  tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
-
-  // Выбираем позицию показывать сверху, если снизу мало места
-  if (spaceBelow < tooltipRect.height + 10 && spaceAbove > tooltipRect.height + 10) {
-    tooltip.classList.add('tooltip-top');
-  } else {
-    tooltip.classList.add('tooltip-bottom');
-  }
-}
+      if (container) container.classList.add('active-parent'); // Поднимаем контейнер
+      adjustTooltipPosition(tooltip, icon);
     }
-      
       
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
-      //    icon.classList.remove('active');
+        if (container) container.classList.remove('active-parent'); // Опускаем обратно
       }
     }
 
-    icon.addEventListener('mouseenter', () => {
-      if (!tooltip.classList.contains('pinned')) {
-        showTooltip();
-      }
-    });
-
-    icon.addEventListener('mouseleave', () => {
-      hideTooltip();
-    });
+    // Обработчик для иконки
+    icon.addEventListener('mouseenter', showTooltip);
+    icon.addEventListener('mouseleave', hideTooltip);
 
     icon.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
 
       if (tooltip.classList.contains('pinned')) {
-        tooltip.classList.remove('pinned');
-        tooltip.classList.remove('active');
-       // tooltip.style.opacity = '0';
-    //    tooltip.style.visibility = 'hidden';
+        tooltip.classList.remove('pinned', 'active');
+        if (container) container.classList.remove('active-parent');
       } else {
-        // Скрываем все закрепленные тултипы
-        document.querySelectorAll('.tooltip.pinned').forEach(tip => {
+        // Скрываем другие активные подсказки
+        document.querySelectorAll('.tooltip.active').forEach(tip => {
           tip.classList.remove('pinned', 'active');
-         // tip.style.opacity = '0';
-        //  tip.style.visibility = 'hidden';
+          const parent = tip.closest('.tooltip-container');
+          if (parent) parent.classList.remove('active-parent');
         });
 
         tooltip.classList.add('pinned');
@@ -367,36 +336,23 @@ function adjustTooltipPosition(tooltip, icon) {
       }
     });
 
+    // Обработчик для кнопки закрытия
     closeBtn.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
-
       tooltip.classList.remove('pinned', 'active');
-        //icon.classList.remove('active');
-     
-
+      if (container) container.classList.remove('active-parent');
       icon.focus();
     });
   });
 
+  // Клик вне подсказки
   document.addEventListener('click', () => {
-    document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-      tooltip.classList.remove('pinned', 'active');
-      tooltip.style.opacity = '0';
-      tooltip.style.visibility = 'hidden';
+    document.querySelectorAll('.tooltip.active').forEach(tip => {
+      tip.classList.remove('pinned', 'active');
+      const parent = tip.closest('.tooltip-container');
+      if (parent) parent.classList.remove('active-parent');
     });
   });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.tooltip.active').forEach(tooltip => {
-        tooltip.classList.remove('pinned', 'active');
-        tooltip.style.opacity = '0';
-        tooltip.style.visibility = 'hidden';
-      });
-    }
-  });
-
-
 }
 
