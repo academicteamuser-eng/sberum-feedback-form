@@ -657,6 +657,8 @@ select option {
     transform: translateX(-50%) translateY(0);
     z-index: 9999 !important;
     background-color: #fff !important; /* белый */
+    opacity: 1 !important;
+  visibility: visible !important;
    
 }
 
@@ -674,12 +676,16 @@ select option {
     right: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%) translateX(10px);
+    opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .tooltip-right {
     left: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%) translateX(10px);
+    opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .tooltip-left.active,
@@ -712,6 +718,7 @@ select option {
 .info-icon.active .tooltip-left {
     transform: translateY(-50%) translateX(0);
     opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Стрелка у tooltip */
@@ -735,6 +742,7 @@ select option {
     transform: translateX(-50%);
     border-bottom-color: white;
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .tooltip-left::after {
