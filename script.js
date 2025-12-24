@@ -298,42 +298,35 @@ function setupTooltipInteractions() {
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
     function showTooltip() {
-     // Шаг 1: Делаем tooltip видимым, но ещё без .active (чтобы измерить реальный размер)
-  tooltip.classList.add('measuring');  // Новый временный класс
-  tooltip.style.visibility = 'hidden'; // Чтобы не мелькал визуально
-  tooltip.style.opacity = '0';
-
-  // Принудительно заставляем браузер пересчитать размеры
-  tooltip.offsetHeight; // reflow trick
-
-  // Теперь измеряем и позиционируем
+      tooltip.classList.add('active');
+    //  tooltip.style.opacity = '1';
+    //  tooltip.style.visibility = 'visible';
+   //     tooltip.style.transform = 'translateX(-50%) translateY(0)';
+     //   tooltip.style.pointerEvents = 'auto';
+        // Корректируем позицию
   adjustTooltipPosition(tooltip, icon);
 
-  // Убираем временный класс и включаем полную видимость
-  tooltip.classList.remove('measuring');
-  tooltip.classList.add('active');
-  tooltip.style.visibility = 'visible';
-  tooltip.style.opacity = '1'; // На всякий случай явно
-}
-
+        //Позиционирование подсказки
 function adjustTooltipPosition(tooltip, icon) {
   const tooltipRect = tooltip.getBoundingClientRect();
   const iconRect = icon.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 
+  // Проверяем доступное место снизу и сверху иконки
   const spaceBelow = viewportHeight - iconRect.bottom;
   const spaceAbove = iconRect.top;
 
-  // Убираем старые классы позиционирования
+  // Убираем классы позиционирования
   tooltip.classList.remove('tooltip-top', 'tooltip-bottom');
 
-  // Решаем, где показывать
-  if (spaceBelow < tooltipRect.height + 20 && spaceAbove >= tooltipRect.height + 20) { // +20 для запаса
+  // Выбираем позицию показывать сверху, если снизу мало места
+  if (spaceBelow < tooltipRect.height + 10 && spaceAbove > tooltipRect.height + 10) {
     tooltip.classList.add('tooltip-top');
   } else {
     tooltip.classList.add('tooltip-bottom');
   }
 }
+    }
       
       
     function hideTooltip() {
