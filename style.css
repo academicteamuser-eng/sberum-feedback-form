@@ -606,7 +606,7 @@ select option {
 .tooltip-container {
     position: relative;
     display: inline-block;
-    z-index: 9999 !important;
+    z-index: 29999 !important;
     
 }
 
