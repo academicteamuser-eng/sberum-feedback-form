@@ -694,29 +694,29 @@ select option {
 }
 
 /* Показать tooltip при наведении на info-icon */
-.info-icon:hover .tooltip,
+/*.info-icon:hover .tooltip,
 .info-icon:focus .tooltip,
 .info-icon.active .tooltip {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
     pointer-events: auto;
-}
+}*/
 
 /* Для tooltip-right и tooltip-left */
-.info-icon:hover .tooltip-right,
+/*.info-icon:hover .tooltip-right,
 .info-icon:focus .tooltip-right,
 .info-icon.active .tooltip-right {
     transform: translateY(-50%) translateX(0);
     opacity: 1 !important;
-}
+}*/
 
-.info-icon:hover .tooltip-left,
+/*.info-icon:hover .tooltip-left,
 .info-icon:focus .tooltip-left,
 .info-icon.active .tooltip-left {
     transform: translateY(-50%) translateX(0);
     opacity: 1 !important;
-}
+}*/
 
 /* Стрелка у tooltip */
 .tooltip::after {
