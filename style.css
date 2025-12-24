@@ -590,17 +590,18 @@ select option {
     position: relative;
     transition: all 0.2s ease;
     user-select: none;
-    z-index: 1000;
     isolation: isolate;
 }
 
 .info-icon:hover {
     background: rgba(102, 126, 234, 0.2);
     transform: scale(1.1);
+    isolation: isolate;
 }
 
 .info-icon:active {
     transform: scale(0.95);
+    isolation: isolate;
 }
 
 /* Контейнер для tooltip */
@@ -649,14 +650,14 @@ select option {
 /* Позиционирование tooltip */
 .tooltip-top {
     bottom: calc(100% + 10px);
-    left: 50%;
+    left: 100%;
     transform: translateX(-50%) translateY(10px);
     background-color: white;
 }
 
 .tooltip-bottom {
     top: calc(100% + 10px);
-    left: 50%;
+    left: 100%;
     transform: translateX(-50%) translateY(0);
   /*  z-index: 9999 !important;
     background-color: #fff !important; /* белый */
