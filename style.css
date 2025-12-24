@@ -608,7 +608,7 @@ select option {
 .tooltip-container {
     position: relative;
     display: inline-block;
-    z-index: 29999 !important;
+    z-index: 9999 !important;
     
 }
 
@@ -621,7 +621,7 @@ select option {
     padding: 16px 20px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.6;
     width: 300px;
     max-width: 90vw;
@@ -650,14 +650,14 @@ select option {
 /* Позиционирование tooltip */
 .tooltip-top {
     bottom: calc(100% + 10px);
-    left: 100%;
+    left: 120%;
     transform: translateX(-50%) translateY(10px);
     background-color: white;
 }
 
 .tooltip-bottom {
     top: calc(100% + 10px);
-    left: 100%;
+    left: 120%;
     transform: translateX(-50%) translateY(0);
   /*  z-index: 9999 !important;
     background-color: #fff !important; /* белый */
