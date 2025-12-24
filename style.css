@@ -609,6 +609,8 @@ select option {
 .info-icon.active {
     background: transparent !important;
     color: transparent !important;
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
 .tooltip {
