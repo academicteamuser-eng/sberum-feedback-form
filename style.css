@@ -606,11 +606,13 @@ select option {
     background: rgba(102, 126, 234, 0.2);
     transform: scale(1.1);
     isolation: isolate;
+    z-index: 1;
 }
 
 .info-icon:active {
     transform: scale(0.95);
     isolation: isolate;
+    z-index: 1;
 }
 
 
@@ -637,7 +639,7 @@ select option {
     pointer-events: none;
     white-space: pre-line;
   /*  margin-left: 100%;*/
-    z-index: 100;
+    z-index: 9999 !important;
     left: 150% !important;
 }
 
