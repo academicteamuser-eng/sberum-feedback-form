@@ -402,11 +402,5 @@ function adjustTooltipPosition(tooltip, icon) {
   });
 
 
-// Вызов setupTooltipInteractions() после создания иконок и tooltip (у тебя в DOMContentLoaded)
-//document.addEventListener('DOMContentLoaded', function() {
-//  createInfoIcons();        // Создает иконки с подсказками
-//  setupTooltipInteractions(); // Подключает логику показа/скрытия
-//});
-
 }
 
