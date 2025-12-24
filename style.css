@@ -580,26 +580,14 @@ select option {
     position: relative;
     display: inline-flex;
     align-items: center;
-    z-index: 9999 !important;
+    isolation: isolate; /* Важно: создает отдельный слой */
+    z-index: 10;
 }
 
 .info-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    border-radius: 50%;
-    margin-left: 8px;
-    cursor: help;
     position: relative;
-    transition: all 0.2s ease;
-    user-select: none;
-    isolation: isolate;
-    z-index: 1; /* Иконка всегда снизу */
+    z-index: 1 !important; 
+    background: rgba(102, 126, 234, 0.1);
 }
 
 .info-icon:hover {
@@ -618,33 +606,28 @@ select option {
 
 /* Сам tooltip */
 .tooltip {
-    transition: none !important;
-    position: absolute;
-    background: white;
+   position: absolute;
+    background-color: #ffffff !important; /* Белый фон без прозрачности */
     color: #2d3748;
     padding: 16px 20px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    font-size: 12px;
-    line-height: 1.6;
     width: 300px;
     max-width: 90vw;
-   
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    z-index: 9999 !important; /* Самый высокий приоритет */
+    
+    /* Центрируем ровно по иконке */
+    left: 50% !important; 
     transform: translateX(-50%) translateY(10px);
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(10px);
-    pointer-events: none;
-    white-space: pre-line;
-  /*  margin-left: 100%;*/
-    z-index: 9999 !important;
-    left: 150% !important;
+    border: 1px solid #e2e8f0;
 }
 
 .tooltip.active {
-  opacity: 1 !important;
+ opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
     transform: translateX(-50%) translateY(0) !important;
@@ -653,17 +636,10 @@ select option {
 /* Позиционирование tooltip */
 .tooltip-top {
     bottom: calc(100% + 10px);
-   /* left: 120%;*/
-    transform: translateX(-50%) translateY(10px);
-    background-color: white;
 }
 
 .tooltip-bottom {
-    top: calc(100% + 10px);
-/*     left: 120%;*/
-    transform: translateX(-50%) translateY(0);
-  /*  z-index: 9999 !important;
-    background-color: #fff !important; /* белый */
+     top: calc(100% + 10px);
    
 }
 
