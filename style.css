@@ -579,13 +579,16 @@ select option {
     overflow: visible !important; /* Чтобы подсказки не обрезались краями формы */
 }
 
-/* 2. Чистые стили для всей группы подсказок */
 .tooltip-container {
     position: relative;
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
     z-index: 9999; /* Вся группа должна быть выше полей ввода */
+}
+
+.tooltip-container.active-parent {
+    z-index: 9999 !important;
 }
 
 .info-icon {
