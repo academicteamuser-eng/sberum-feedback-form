@@ -611,7 +611,7 @@ select option {
 
 /* Сам tooltip */
 .tooltip {
- /*   transition: none !important;*/
+    transition: none !important;
     position: absolute;
     background: white;
     color: #2d3748;
@@ -626,14 +626,13 @@ select option {
     opacity: 1 !important;
     visibility: hidden;
     transform: translateY(10px);
-     transition: opacity 0.2s ease !important;
+     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(0, 0, 0, 0.08);
-   /* backdrop-filter: blur(10px);*/
+  backdrop-filter: blur(10px);
     pointer-events: none;
     white-space: pre-line;
    margin-left: 100%;
-    z-index: 9999 !important;
-    transition-delay: 0s !important;
+    z-index: 1000;
 }
 
 .tooltip.active {
@@ -641,10 +640,9 @@ select option {
   visibility: visible !important;
   transform: translateX(-50%) translateY(0) !important;
   pointer-events: auto !important;
-    background-color: white;
-    z-index: 9999 !important;
+   /* background-color: white;
+    z-index: 9999 !important;*/
 }
-
 
 /* Позиционирование tooltip */
 .tooltip-top {
@@ -658,7 +656,7 @@ select option {
     top: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%) translateY(0);
-    z-index: 9999 !important;
+  /*  z-index: 9999 !important;
     background-color: #fff !important; /* белый */
    
 }
@@ -691,19 +689,6 @@ select option {
     opacity: 1 !important;
   visibility: visible !important;
 }
-
-.tooltip.tooltip-bottom,
-.tooltip.tooltip-top {
-    opacity: 1 !important;  /* Специально для позиций */
-}
-
-/*.tooltip.tooltip-container {
-    opacity: 1 !important;
-    background-color: #ffffff !important;  /* Полностью белый фон */
-}*/
-/*.tooltip:not(.active):not(.pinned) {
-    opacity: 1 !important;  /* Принудительно, даже без этих классов */
-}*/
 
 /* Показать tooltip при наведении на info-icon */
 .info-icon:hover .tooltip,
