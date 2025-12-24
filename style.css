@@ -575,6 +575,14 @@ select option {
 
 /* ========== СТИЛИ ДЛЯ ИНФОРМАЦИОННЫХ ИКОНОК ========== */
 
+/* Контейнер для tooltip */
+.tooltip-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    z-index: 10;
+}
+
 .info-icon {
     display: inline-flex;
     align-items: center;
@@ -605,14 +613,6 @@ select option {
     isolation: isolate;
 }
 
-/* Контейнер для tooltip */
-.tooltip-container {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    z-index: 10;
-    
-}
 
 /* Сам tooltip */
 .tooltip {
