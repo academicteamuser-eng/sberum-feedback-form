@@ -10,9 +10,10 @@ const typeSelect = document.getElementById('type');
 const successModal = document.getElementById('successModal');
 const errorModal = document.getElementById('errorModal');
 
-// Группы полей для багов и фич
+// Группы полей для багов, фич и вопросов
 const bugFields = document.querySelectorAll('.bug-fields');
 const featureFields = document.querySelectorAll('.feature-fields');
+const questionFields = document.querySelectorAll('.question-fields');
 
 // Изначально скрываем все условные поля
 function hideAllConditionalFields() {
@@ -20,6 +21,9 @@ function hideAllConditionalFields() {
         field.style.display = 'none';
     });
     featureFields.forEach(field => {
+        field.style.display = 'none';
+    });
+    questionFields.forEach(field => {
         field.style.display = 'none';
     });
 }
@@ -36,6 +40,10 @@ function toggleFieldsBasedOnType() {
         });
     } else if (selectedType === 'фича') {
         featureFields.forEach(field => {
+            field.style.display = 'flex';
+        });
+        } else if (selectedType === 'вопрос') {
+        questionFields.forEach(field => {
             field.style.display = 'flex';
         });
     }
@@ -131,7 +139,7 @@ form.addEventListener('submit', async (event) => {
         improvementDescription: document.getElementById('improvementDescription').value || '',
         suggestion: document.getElementById('suggestion').value || '',
         purpose: document.getElementById('purpose').value || '',
-        answer: document.getElementById('answer').value || '',
+        questionText: document.getElementById('questionText').value || '',
         screenshots: document.getElementById('screenshots').files.length > 0 ? 
             Array.from(document.getElementById('screenshots').files).map(f => f.name).join(', ') : '',
         mediaUrl: document.getElementById('mediaUrl').value || '',
