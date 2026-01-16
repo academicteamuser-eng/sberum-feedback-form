@@ -1,9 +1,7 @@
 // Конфигурация Google Sheets 
 const SHEET_CONFIG = {
-    BUGS_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1s143m2DqNROUUQqbDmJosxLYkjIHZTu8WKs9Ypw_3hw/edit?gid=78323318#gid=78323318',
-    FEATURES_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1s143m2DqNROUUQqbDmJosxLYkjIHZTu8WKs9Ypw_3hw/edit?gid=0#gid=0',
-    // Вам нужно создать Web App в Google Apps Script и вставить сюда URL
-    WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbxRsdHuHuv74ALfQqBMOEj5UaCFb9WcUkRp7EtfLYyMw_UGD_HSwR232oCHHikHCdk/exec' // Замените на ваш URL
+    // ВАЖНО: Замените этот URL на URL вашего Google Apps Script Web App
+    WEB_APP_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
 };
 
 // DOM элементы
@@ -94,22 +92,21 @@ window.addEventListener('beforeunload', (event) => {
 // Функция для отправки данных в Google Sheets
 async function submitToGoogleSheets(formData) {
     try {
-        // ВАЖНО: Замените этот URL на URL вашего Google Apps Script Web App
-        // После того как создадите скрипт и развернете его как веб-приложение
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxwv-g4iMPyRfbuyu2ojPaL-oxMuKlDJaVnYb62mmYUiReAQYc11uXU40fn7SDctzk97Q/exec';
-        
-        const response = await fetch(WEB_APP_URL, {
+        const response = await fetch(SHEET_CONFIG.WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Важно для Google Apps Script
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'text/plain',
             },
             body: JSON.stringify(formData)
         });
         
-        // При mode: 'no-cors' мы не можем проверить статус ответа,
-        // но если не будет ошибок сети, считаем успешным
-        return { success: true };
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            return { success: true };
+        } else {
+            throw new Error(result.message || 'Ошибка при отправке данных');
+        }
         
     } catch (error) {
         console.error('Error submitting to Google Sheets:', error);
@@ -123,27 +120,27 @@ form.addEventListener('submit', async (event) => {
     
     // Сбор данных формы
     const formData = {
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
         name: document.getElementById('name').value,
         platformSection: document.getElementById('platformSection').value,
         role: document.getElementById('role').value,
         type: document.getElementById('type').value,
-        problemDescription: document.getElementById('problemDescription').value,
-        expectedActual: document.getElementById('expectedActual').value,
-        improvementDescription: document.getElementById('improvementDescription').value,
-        suggestion: document.getElementById('suggestion').value,
-        purpose: document.getElementById('purpose').value,
-        priority: document.getElementById('priority').value,
+        problemDescription: document.getElementById('problemDescription').value || '',
+        expectedActual: document.getElementById('expectedActual').value || '',
+        improvementDescription: document.getElementById('improvementDescription').value || '',
+        suggestion: document.getElementById('suggestion').value || '',
+        purpose: document.getElementById('purpose').value || '',
+        priority: document.getElementById('priority').value || '',
         screenshots: document.getElementById('screenshots').files.length > 0 ? 
             Array.from(document.getElementById('screenshots').files).map(f => f.name).join(', ') : '',
-        mediaUrl: document.getElementById('mediaUrl').value,
-        taskLink: document.getElementById('taskLink').value
+        mediaUrl: document.getElementById('mediaUrl').value || '',
+        taskLink: document.getElementById('taskLink').value || ''
     };
     
     // Показать индикатор загрузки
     const submitBtn = form.querySelector('.submit-btn');
     const originalText = submitBtn.innerHTML;
-    submitBtn.classList.add('sending'); //анимация
+    submitBtn.classList.add('sending');
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
     submitBtn.disabled = true;
     
@@ -154,8 +151,8 @@ form.addEventListener('submit', async (event) => {
         // Показать успешное сообщение
         showModal(successModal);
         submitBtn.classList.remove('sending');
-submitBtn.classList.add('success');
-setTimeout(() => submitBtn.classList.remove('success'), 3000);
+        submitBtn.classList.add('success');
+        setTimeout(() => submitBtn.classList.remove('success'), 3000);
         
         // Сбросить форму
         form.reset();
@@ -167,8 +164,8 @@ setTimeout(() => submitBtn.classList.remove('success'), 3000);
         showModal(errorModal);
         console.error('Submission error:', error);
         submitBtn.classList.remove('sending');
-submitBtn.classList.add('error');
-setTimeout(() => submitBtn.classList.remove('error'), 3000);
+        submitBtn.classList.add('error');
+        setTimeout(() => submitBtn.classList.remove('error'), 3000);
         
     } finally {
         // Восстановить кнопку
@@ -182,7 +179,6 @@ const fileInput = document.getElementById('screenshots');
 fileInput.addEventListener('change', (event) => {
     const files = event.target.files;
     if (files.length > 0) {
-        // Можно добавить предпросмотр файлов
         console.log(`${files.length} файлов выбрано`);
     }
 });
@@ -244,7 +240,6 @@ function createInfoIcons() {
         const icon = document.createElement('span');
         icon.className = 'info-icon';
        icon.textContent = 'i';
-        //icon.title = 'Показать подсказку';
         icon.setAttribute('aria-label', 'Информация');
         icon.setAttribute('role', 'button');
         icon.setAttribute('tabindex', '0');
@@ -282,8 +277,8 @@ function createInfoIcons() {
         tooltip.appendChild(closeButton);
         
        // ВАЖНО: Добавляем иконку и подсказку как СОСЕДЕЙ
-        iconContainer.appendChild(icon); // Сначала иконку
-        iconContainer.appendChild(tooltip); // Затем подсказку рядом
+        iconContainer.appendChild(icon);
+        iconContainer.appendChild(tooltip);
         
         
         // Добавляем контейнер в label
@@ -296,19 +291,19 @@ function setupTooltipInteractions() {
 
   infoIcons.forEach(icon => {
     const tooltip = icon.nextElementSibling; 
-    const container = icon.closest('.tooltip-container'); // Находим родителя
+    const container = icon.closest('.tooltip-container');
     const closeBtn = tooltip.querySelector('.tooltip-close');
 
     function showTooltip() {
       tooltip.classList.add('active');
-      if (container) container.classList.add('active-parent'); // Поднимаем контейнер
+      if (container) container.classList.add('active-parent');
       adjustTooltipPosition(tooltip, icon);
     }
       
     function hideTooltip() {
       if (!tooltip.classList.contains('pinned')) {
         tooltip.classList.remove('active');
-        if (container) container.classList.remove('active-parent'); // Опускаем обратно
+        if (container) container.classList.remove('active-parent');
       }
     }
 
@@ -377,4 +372,3 @@ function adjustTooltipPosition(tooltip, icon) {
 }
     
 }
-
