@@ -76,6 +76,17 @@
                     </select>
                 </div>
 
+                <!-- 10. Приоритет -->
+                <div class="form-group">
+                    <label for="priority">Приоритет</label>
+                    <select id="priority" name="priority">
+                        <option value="" disabled selected>выберите</option>
+                        <option value="низкий">низкий</option>
+                        <option value="средний">средний</option>
+                        <option value="высокий">высокий</option>
+                    </select>
+                </div>
+
                 <!-- 5. Сценарий - показывается только для багов -->
                 <div class="form-group bug-fields" id="bugDescriptionGroup">
                     <label for="problemDescription">Сценарий
@@ -142,16 +153,15 @@
                     <textarea id="purpose" name="purpose" 
                               placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
                 </div>
-
-                <!-- 10. Приоритет -->
-                <div class="form-group">
-                    <label for="priority">Приоритет</label>
-                    <select id="priority" name="priority">
-                        <option value="" disabled selected>выберите</option>
-                        <option value="низкий">низкий</option>
-                        <option value="средний">средний</option>
-                        <option value="высокий">высокий</option>
-                    </select>
+                
+ <!-- 10. Вопрос - показывается только для вопросов -->
+                <div class="form-group feature-fields" id="purposeGroup">
+                    <label for="purpose">Для чего?
+                    <span class="info-icon" data-tooltip="Пример:
+                        Это позволит снизить нагрузку на худредакцию, т.к. откроет больше возможностей для самостоятельного оформления контента на платформе"></span>
+    </label>
+                    <textarea id="purpose" name="purpose" 
+                              placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
                 </div>
 
                 <!-- 11. Скриншоты / видео -->
