@@ -1,7 +1,7 @@
 // Конфигурация Google Sheets 
 const SHEET_CONFIG = {
     // ВАЖНО: Замените этот URL на URL вашего Google Apps Script Web App
-    WEB_APP_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
+    WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbyOSwZEYPU9OD3HSjJ_nnD6Cg9K1VgjvjJMCdGym2kji3OvHD9pT2JiswSgqPbzSsQ/exec'
 };
 
 // DOM элементы
