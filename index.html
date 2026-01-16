@@ -153,15 +153,12 @@
                     <textarea id="purpose" name="purpose" 
                               placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
                 </div>
-                
- <!-- 10. Вопрос - показывается только для вопросов -->
-                <div class="form-group feature-fields" id="purposeGroup">
-                    <label for="purpose">Для чего?
-                    <span class="info-icon" data-tooltip="Пример:
-                        Это позволит снизить нагрузку на худредакцию, т.к. откроет больше возможностей для самостоятельного оформления контента на платформе"></span>
-    </label>
-                    <textarea id="purpose" name="purpose" 
-                              placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
+
+                <!-- Вопрос - показывается только для типа "вопрос" -->
+                <div class="form-group question-fields" id="questionGroup" style="display: none;">
+                    <label for="questionText">Вопрос <span class="required">*</span></label>
+                    <textarea id="questionText" name="questionText" 
+                              placeholder="Опишите ваш вопрос"></textarea>
                 </div>
 
                 <!-- 11. Скриншоты / видео -->
