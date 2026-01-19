@@ -4,7 +4,100 @@ const SHEET_CONFIG = {
     WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbyOSwZEYPU9OD3HSjJ_nnD6Cg9K1VgjvjJMCdGym2kji3OvHD9pT2JiswSgqPbzSsQ/exec'
 };
 
-// ... (остальной код остается без изменений до функции submitToGoogleSheets)
+// DOM элементы
+const form = document.getElementById('feedbackForm');
+const typeSelect = document.getElementById('type');
+const successModal = document.getElementById('successModal');
+const errorModal = document.getElementById('errorModal');
+
+// Группы полей для багов, фич и вопросов
+const bugFields = document.querySelectorAll('.bug-fields');
+const featureFields = document.querySelectorAll('.feature-fields');
+const questionFields = document.querySelectorAll('.question-fields');
+
+// Изначально скрываем все условные поля
+function hideAllConditionalFields() {
+    bugFields.forEach(field => {
+        field.style.display = 'none';
+    });
+    featureFields.forEach(field => {
+        field.style.display = 'none';
+    });
+    questionFields.forEach(field => {
+        field.style.display = 'none';
+    });
+}
+
+// Показываем поля в зависимости от выбранного типа
+function toggleFieldsBasedOnType() {
+    const selectedType = typeSelect.value;
+    
+    hideAllConditionalFields();
+    
+    if (selectedType === 'баг') {
+        bugFields.forEach(field => {
+            field.style.display = 'flex';
+        });
+    } else if (selectedType === 'фича') {
+        featureFields.forEach(field => {
+            field.style.display = 'flex';
+        });
+        } else if (selectedType === 'вопрос') {
+        questionFields.forEach(field => {
+            field.style.display = 'flex';
+        });
+    }
+}
+
+// Обработчик изменения типа
+typeSelect.addEventListener('change', toggleFieldsBasedOnType);
+
+// Инициализация полей при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    hideAllConditionalFields();
+    
+    // Проверяем, если уже выбран тип при перезагрузке
+    if (typeSelect.value) {
+        toggleFieldsBasedOnType();
+    }
+});
+
+// Функции для работы с модальными окнами
+function showModal(modal) {
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    successModal.style.display = 'none';
+    errorModal.style.display = 'none';
+}
+
+// Закрытие модального окна при клике вне его
+window.addEventListener('click', (event) => {
+    if (event.target === successModal || event.target === errorModal) {
+        closeModal();
+    }
+});
+
+// Предупреждение при закрытии страницы с несохраненной формой
+let formChanged = false;
+
+form.addEventListener('input', () => {
+    formChanged = true;
+});
+
+form.addEventListener('change', () => {
+    formChanged = true;
+});
+
+window.addEventListener('beforeunload', (event) => {
+    if (formChanged) {
+        event.preventDefault();
+        event.returnValue = 'Вы хотите закрыть страницу, данные в форме не сохраняются.';
+    }
+});
+
+//Новое
 
 // Функция для чтения файлов в base64
 async function readFilesAsBase64(files) {
