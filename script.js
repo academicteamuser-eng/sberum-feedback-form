@@ -4,183 +4,132 @@ const SHEET_CONFIG = {
     WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbyOSwZEYPU9OD3HSjJ_nnD6Cg9K1VgjvjJMCdGym2kji3OvHD9pT2JiswSgqPbzSsQ/exec'
 };
 
-// DOM элементы
-const form = document.getElementById('feedbackForm');
-const typeSelect = document.getElementById('type');
-const successModal = document.getElementById('successModal');
-const errorModal = document.getElementById('errorModal');
+// ... (остальной код остается без изменений до функции submitToGoogleSheets)
 
-// Группы полей для багов, фич и вопросов
-const bugFields = document.querySelectorAll('.bug-fields');
-const featureFields = document.querySelectorAll('.feature-fields');
-const questionFields = document.querySelectorAll('.question-fields');
-
-// Изначально скрываем все условные поля
-function hideAllConditionalFields() {
-    bugFields.forEach(field => {
-        field.style.display = 'none';
+// Функция для чтения файлов в base64
+async function readFilesAsBase64(files) {
+  const filePromises = Array.from(files).map(file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Извлекаем base64 часть (убираем data:image/png;base64, префикс)
+        const base64 = e.target.result.split(',')[1];
+        resolve({
+          filename: file.name,
+          mimeType: file.type,
+          base64: base64,
+          size: file.size
+        });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
-    featureFields.forEach(field => {
-        field.style.display = 'none';
-    });
-    questionFields.forEach(field => {
-        field.style.display = 'none';
-    });
+  });
+  
+  return Promise.all(filePromises);
 }
 
-// Показываем поля в зависимости от выбранного типа
-function toggleFieldsBasedOnType() {
-    const selectedType = typeSelect.value;
+// Функция для отправки данных в Google Sheets (обновленная)
+async function submitToGoogleSheets(formData, files) {
+  try {
+    // Подготавливаем файлы для отправки
+    let filesData = [];
+    if (files && files.length > 0) {
+      filesData = await readFilesAsBase64(files);
+    }
     
-    hideAllConditionalFields();
-    
-    if (selectedType === 'баг') {
-        bugFields.forEach(field => {
-            field.style.display = 'flex';
-        });
-    } else if (selectedType === 'фича') {
-        featureFields.forEach(field => {
-            field.style.display = 'flex';
-        });
-        } else if (selectedType === 'вопрос') {
-        questionFields.forEach(field => {
-            field.style.display = 'flex';
-        });
-    }
-}
-
-// Обработчик изменения типа
-typeSelect.addEventListener('change', toggleFieldsBasedOnType);
-
-// Инициализация полей при загрузке
-document.addEventListener('DOMContentLoaded', () => {
-    hideAllConditionalFields();
-    
-    // Проверяем, если уже выбран тип при перезагрузке
-    if (typeSelect.value) {
-        toggleFieldsBasedOnType();
-    }
-});
-
-// Функции для работы с модальными окнами
-function showModal(modal) {
-    modal.style.display = 'flex';
-}
-
-function closeModal() {
-    successModal.style.display = 'none';
-    errorModal.style.display = 'none';
-}
-
-// Закрытие модального окна при клике вне его
-window.addEventListener('click', (event) => {
-    if (event.target === successModal || event.target === errorModal) {
-        closeModal();
-    }
-});
-
-// Предупреждение при закрытии страницы с несохраненной формой
-let formChanged = false;
-
-form.addEventListener('input', () => {
-    formChanged = true;
-});
-
-form.addEventListener('change', () => {
-    formChanged = true;
-});
-
-window.addEventListener('beforeunload', (event) => {
-    if (formChanged) {
-        event.preventDefault();
-        event.returnValue = 'Вы хотите закрыть страницу, данные в форме не сохраняются.';
-    }
-});
-
-// Функция для отправки данных в Google Sheets
-async function submitToGoogleSheets(formData) {
-    try {
-        const response = await fetch(SHEET_CONFIG.WEB_APP_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain',
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-            return { success: true };
-        } else {
-            throw new Error(result.message || 'Ошибка при отправке данных');
-        }
-        
-    } catch (error) {
-        console.error('Error submitting to Google Sheets:', error);
-        throw error;
-    }
-}
-
-// Обработка отправки формы
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    
-    // Сбор данных формы
-    const formData = {
-        timestamp: new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
-        name: document.getElementById('name').value,
-        platformSection: document.getElementById('platformSection').value,
-        role: document.getElementById('role').value,
-        type: document.getElementById('type').value,
-        priority: document.getElementById('priority').value,
-        problemDescription: document.getElementById('problemDescription').value || '',
-        expectedActual: document.getElementById('expectedActual').value || '',
-        improvementDescription: document.getElementById('improvementDescription').value || '',
-        suggestion: document.getElementById('suggestion').value || '',
-        purpose: document.getElementById('purpose').value || '',
-        questionText: document.getElementById('questionText').value || '',
-        screenshots: document.getElementById('screenshots').files.length > 0 ? 
-            Array.from(document.getElementById('screenshots').files).map(f => f.name).join(', ') : '',
-        mediaUrl: document.getElementById('mediaUrl').value || '',
-        taskLink: document.getElementById('taskLink').value || ''
+    // Добавляем файлы к данным формы
+    const dataToSend = {
+      ...formData,
+      files: filesData
     };
     
-    // Показать индикатор загрузки
-    const submitBtn = form.querySelector('.submit-btn');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.classList.add('sending');
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-    submitBtn.disabled = true;
+    const response = await fetch(SHEET_CONFIG.WEB_APP_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: JSON.stringify(dataToSend)
+    });
     
-    try {
-        // Отправка данных
-        await submitToGoogleSheets(formData);
-        
-        // Показать успешное сообщение
-        showModal(successModal);
-        submitBtn.classList.remove('sending');
-        submitBtn.classList.add('success');
-        setTimeout(() => submitBtn.classList.remove('success'), 3000);
-        
-        // Сбросить форму
-        form.reset();
-        formChanged = false;
-        hideAllConditionalFields();
-        
-    } catch (error) {
-        // Показать сообщение об ошибке
-        showModal(errorModal);
-        console.error('Submission error:', error);
-        submitBtn.classList.remove('sending');
-        submitBtn.classList.add('error');
-        setTimeout(() => submitBtn.classList.remove('error'), 3000);
-        
-    } finally {
-        // Восстановить кнопку
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
+    const result = await response.json();
+    
+    if (result.status === 'success') {
+      return { success: true, data: result };
+    } else {
+      throw new Error(result.message || 'Ошибка при отправке данных');
     }
+    
+  } catch (error) {
+    console.error('Error submitting to Google Sheets:', error);
+    throw error;
+  }
+}
+
+// Обновите обработчик отправки формы
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  
+  // Сбор данных формы
+  const formData = {
+    timestamp: new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
+    name: document.getElementById('name').value,
+    platformSection: document.getElementById('platformSection').value,
+    role: document.getElementById('role').value,
+    type: document.getElementById('type').value,
+    priority: document.getElementById('priority').value,
+    problemDescription: document.getElementById('problemDescription').value || '',
+    expectedActual: document.getElementById('expectedActual').value || '',
+    improvementDescription: document.getElementById('improvementDescription').value || '',
+    suggestion: document.getElementById('suggestion').value || '',
+    purpose: document.getElementById('purpose').value || '',
+    questionText: document.getElementById('questionText').value || '',
+    mediaUrl: document.getElementById('mediaUrl').value || '',
+    taskLink: document.getElementById('taskLink').value || ''
+  };
+  
+  // Получаем выбранные файлы
+  const filesInput = document.getElementById('screenshots');
+  const files = filesInput.files;
+  
+  // Показать индикатор загрузки
+  const submitBtn = form.querySelector('.submit-btn');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.classList.add('sending');
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+  submitBtn.disabled = true;
+  
+  try {
+    // Отправка данных (передаем и файлы)
+    const result = await submitToGoogleSheets(formData, files);
+    
+    // Показать успешное сообщение
+    showModal(successModal);
+    submitBtn.classList.remove('sending');
+    submitBtn.classList.add('success');
+    setTimeout(() => submitBtn.classList.remove('success'), 3000);
+    
+    // Сбросить форму
+    form.reset();
+    formChanged = false;
+    hideAllConditionalFields();
+    
+    // Очистить поле файлов
+    filesInput.value = '';
+    
+  } catch (error) {
+    // Показать сообщение об ошибке
+    showModal(errorModal);
+    console.error('Submission error:', error);
+    submitBtn.classList.remove('sending');
+    submitBtn.classList.add('error');
+    setTimeout(() => submitBtn.classList.remove('error'), 3000);
+    
+  } finally {
+    // Восстановить кнопку
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+  }
 });
 
 // Обработка загрузки файлов
