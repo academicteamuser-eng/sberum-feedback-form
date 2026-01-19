@@ -177,7 +177,7 @@ form.addEventListener('submit', async (event) => {
     suggestion: document.getElementById('suggestion').value || '',
     purpose: document.getElementById('purpose').value || '',
     questionText: document.getElementById('questionText').value || '',
-   // mediaUrl: document.getElementById('mediaUrl').value || '',
+    mediaUrl: document.getElementById('mediaUrl').value || '',
     taskLink: document.getElementById('taskLink').value || ''
   };
   
