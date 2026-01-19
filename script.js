@@ -133,7 +133,7 @@ form.addEventListener('submit', async (event) => {
         platformSection: document.getElementById('platformSection').value,
         role: document.getElementById('role').value,
         type: document.getElementById('type').value,
-        priority: document.getElementById('priority').value || '',
+        priority: document.getElementById('priority').value,
         problemDescription: document.getElementById('problemDescription').value || '',
         expectedActual: document.getElementById('expectedActual').value || '',
         improvementDescription: document.getElementById('improvementDescription').value || '',
