@@ -122,6 +122,35 @@ async function readFilesAsBase64(files) {
   return Promise.all(filePromises);
 }
 
+// Показывать список выбранных файлов
+const fileInput = document.getElementById('screenshots');
+const fileList = document.getElementById('file-list');
+
+fileInput.addEventListener('change', (event) => {
+  const files = event.target.files;
+  if (files.length > 0) {
+    let html = '';
+    const totalSize = Array.from(files).reduce((sum, file) => sum + file.size, 0);
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    
+    if (totalSize > maxSize) {
+      alert(`Общий размер файлов (${(totalSize/1024/1024).toFixed(2)} МБ) превышает лимит 50 МБ`);
+      fileInput.value = '';
+      fileList.innerHTML = '';
+      return;
+    }
+    
+    Array.from(files).forEach((file, index) => {
+      const size = (file.size / 1024).toFixed(2);
+      html += `<div>${index + 1}. ${file.name} (${size} КБ)</div>`;
+    });
+    
+    fileList.innerHTML = html;
+  } else {
+    fileList.innerHTML = '';
+  }
+});
+
 // Функция для отправки данных в Google Sheets (обновленная)
 async function submitToGoogleSheets(formData, files) {
   try {
@@ -232,35 +261,6 @@ fileInput.addEventListener('change', (event) => {
     if (files.length > 0) {
         console.log(`${files.length} файлов выбрано`);
     }
-});
-
-// Показывать список выбранных файлов
-const fileInput = document.getElementById('screenshots');
-const fileList = document.getElementById('file-list');
-
-fileInput.addEventListener('change', (event) => {
-  const files = event.target.files;
-  if (files.length > 0) {
-    let html = '';
-    const totalSize = Array.from(files).reduce((sum, file) => sum + file.size, 0);
-    const maxSize = 50 * 1024 * 1024; // 50MB
-    
-    if (totalSize > maxSize) {
-      alert(`Общий размер файлов (${(totalSize/1024/1024).toFixed(2)} МБ) превышает лимит 50 МБ`);
-      fileInput.value = '';
-      fileList.innerHTML = '';
-      return;
-    }
-    
-    Array.from(files).forEach((file, index) => {
-      const size = (file.size / 1024).toFixed(2);
-      html += `<div>${index + 1}. ${file.name} (${size} КБ)</div>`;
-    });
-    
-    fileList.innerHTML = html;
-  } else {
-    fileList.innerHTML = '';
-  }
 });
 
 // ========== ИНФОРМАЦИОННЫЕ ИКОНКИ С ПОДСКАЗКАМИ ==========
