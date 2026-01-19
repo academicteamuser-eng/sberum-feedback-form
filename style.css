@@ -296,7 +296,7 @@ select option {
 .file-upload-section {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    /*gap: 15px;*/
 }
 
 .file-upload-section input[type="file"] {
