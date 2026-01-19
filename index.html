@@ -76,7 +76,7 @@
                     </select>
                 </div>
 
-                <!-- 10. Приоритет -->
+                <!-- 5. Приоритет -->
                 <div class="form-group">
                     <label for="priority">Приоритет</label>
                     <select id="priority" name="priority">
@@ -87,7 +87,14 @@
                     </select>
                 </div>
 
-                <!-- 5. Сценарий - показывается только для багов -->
+                <!-- 6. ПОЛЕ "Вопрос" - показывается только для типа "вопрос" -->
+                <div class="form-group question-fields" id="questionGroup" style="display: none;">
+                    <label for="questionText">Вопрос <span class="required">*</span></label>
+                    <textarea id="questionText" name="questionText" 
+                              placeholder="Опишите ваш вопрос"></textarea>
+                </div>
+
+                <!-- 7. Сценарий - показывается только для багов -->
                 <div class="form-group bug-fields" id="bugDescriptionGroup">
                     <label for="problemDescription">Сценарий
                     <span class="info-icon" data-tooltip="Пример:
@@ -103,7 +110,7 @@
                         2. ..."></textarea>
                 </div>
 
-                <!-- 6. Результат - показывается только для багов -->
+                <!-- 8. Результат - показывается только для багов -->
                 <div class="form-group bug-fields" id="resultsGroup">
                     <label for="expectedActual">Результат
                     <span class="info-icon" data-tooltip="Пример:
@@ -116,7 +123,7 @@
                         Фактический: ..."></textarea>
                 </div>
 
-                <!-- 7. Сценарий - показывается только для фич -->
+                <!-- 9. Сценарий - показывается только для фич -->
                 <div class="form-group feature-fields" id="improvementGroup">
                     <label for="improvementDescription">Сценарий
                     <span class="info-icon" data-tooltip="Пример:
@@ -131,7 +138,7 @@
                         2. ..."></textarea>
                 </div>
 
-                <!-- 8. Результат - показывается только для фич -->
+                <!-- 10. Результат - показывается только для фич -->
                 <div class="form-group feature-fields" id="suggestionGroup">
                     <label for="suggestion">Результат
                     <span class="info-icon" data-tooltip="Пример:
@@ -144,7 +151,7 @@
                         Фактический: ..."></textarea>
                 </div>
 
-                <!-- 9. Для чего? - показывается только для фич -->
+                <!-- 11. Для чего? - показывается только для фич -->
                 <div class="form-group feature-fields" id="purposeGroup">
                     <label for="purpose">Для чего?
                     <span class="info-icon" data-tooltip="Пример:
@@ -154,14 +161,7 @@
                               placeholder="Опишите для чего эта доработка, с чем или где она поможет"></textarea>
                 </div>
 
-                <!-- Вопрос - показывается только для типа "вопрос" -->
-                <div class="form-group question-fields" id="questionGroup" style="display: none;">
-                    <label for="questionText">Вопрос <span class="required">*</span></label>
-                    <textarea id="questionText" name="questionText" 
-                              placeholder="Опишите ваш вопрос"></textarea>
-                </div>
-
-                <!-- 11. Скриншоты / видео -->
+                <!-- 12. Скриншоты / видео -->
                 <div class="form-group">
                     <label for="screenshots">Скриншоты / видео</label>
                     <div class="file-upload-section">
@@ -172,7 +172,7 @@
                     </div>
                 </div>
 
-                <!-- 12. Ссылка на задание -->
+                <!-- 13. Ссылка на задание -->
                 <div class="form-group">
                     <label for="taskLink">Ссылка на задание</label>
                     <input type="url" id="taskLink" name="taskLink" placeholder="https://...">
