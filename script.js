@@ -178,7 +178,7 @@ form.addEventListener('submit', async (event) => {
     purpose: document.getElementById('purpose').value || '',
     questionText: document.getElementById('questionText').value || '',
     mediaUrl: document.getElementById('mediaUrl').value || '',
-    taskLink: document.getElementById('taskLink').value || ''
+    taskLink: document.getElementById('taskLink').value || ' '
   };
   
   // Получаем выбранные файлы
