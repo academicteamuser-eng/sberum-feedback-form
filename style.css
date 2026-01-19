@@ -712,7 +712,7 @@ select option {
     .tooltip::after { display: none; }
 }
 
-/* Стили для списка выбранных файлов 
+/* Стили для списка выбранных файлов */
 .file-list {
     margin-top: 10px;
     font-size: 14px;
@@ -726,4 +726,4 @@ select option {
 
 .file-list div:last-child {
     border-bottom: none;
-}*/
+}
